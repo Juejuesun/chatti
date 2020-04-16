@@ -2,7 +2,7 @@
     <div>
         
         <el-row type="flex" justify="center">
-            <el-col :span="22" label-position="top">
+            <el-col :span="24" label-position="top">
                     <h3>Settings</h3>
                     <p>Update your profile details</p>
             </el-col>
@@ -10,7 +10,7 @@
 
         <!-- 表单区 -->
         <el-row type="flex" justify="center">
-            <el-col :span="18">
+            <el-col :span="15">
                 <el-form label-position="top" >
                     <div class="cont1">
                         <div>

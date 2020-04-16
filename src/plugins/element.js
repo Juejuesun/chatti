@@ -9,7 +9,14 @@ import {
     Col,
     Row,
     Card,
-    Image
+    Image,
+    Container,
+    Aside,
+    Main,
+    Footer,
+    Header,
+    Popover,
+    Avatar
 } from 'element-ui'
 
 Vue.use(Button)
@@ -21,5 +28,12 @@ Vue.use(Col)
 Vue.use(Row)
 Vue.use(Card)
 Vue.use(Image)
+Vue.use(Container)
+Vue.use(Aside)
+Vue.use(Main)
+Vue.use(Footer)
+Vue.use(Header)
+Vue.use(Popover)
+Vue.use(Avatar)
 
 Vue.prototype.$message = Message

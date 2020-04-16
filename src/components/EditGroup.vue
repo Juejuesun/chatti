@@ -1,16 +1,28 @@
 <template>
     <div>
-        
         <el-row type="flex" justify="center">
-            <el-col :span="24" label-position="top">
-                <h3>Create group</h3>
-                <el-input placeholder="Search for message or users... " suffix-icon="el-icon-search"></el-input>
+            <el-col :span="24">
+                <el-card class="box-card">
+                    <div class="cont1">
+                        <div>
+                           <el-avatar :size="80" src="https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg" fit="fit">
+                                <!-- <el-image src="https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg" fit="cover"></el-image> -->
+                            </el-avatar>
+                        </div>
+                        <div>
+                            <h3>Bootstrap Themes</h3>
+                        </div>
+                        <div>
+                            <p>Bootstrap is an open source toolkit for developing web with HTML, CSS and JS.</p>
+                        </div>
+                    </div>
+                </el-card>
             </el-col>
         </el-row>
 
         <!-- 表单区 -->
         <el-row type="flex" justify="center">
-            <el-col :span="16">
+            <el-col :span="24">
                 <el-form label-position="top" >
                     <el-form-item label="Photo">
                         <el-upload class="avatar-uploader" action="https://jsonplaceholder.typicode.com/posts/" :show-file-list="false" :on-success="handleAvatarSuccess" :before-upload="beforeAvatarUpload">
@@ -35,11 +47,9 @@
         </el-row>
         <el-row  type="flex" justify="center">
             <!-- <el-col :span="12"> -->
-                <el-button type="primary" >Create group</el-button>
+                <el-button type="primary" >Save Preferences</el-button>
             <!-- </el-col> -->
         </el-row>
-        
-         
     </div>
 </template>
 
@@ -70,7 +80,21 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
+.cont1{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.el-image{
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+}
+.box-card{
+    margin-top: 15px;
+    margin-bottom: 10px;
+}
 .avatar-uploader .el-upload {
     border: 1px dashed #d9d9d9;
     border-radius: 6px;
@@ -94,7 +118,4 @@ export default {
     height: 178px;
     display: block;
 }
-/* .el-input{
-    
-} */
 </style>

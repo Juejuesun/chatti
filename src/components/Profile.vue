@@ -1,20 +1,23 @@
 <template>
     <div>
         
-        <el-row type="flex" justify="center">
-            <el-col :span="18" label-position="top">
+        <el-row >
+            <el-col :span="24">
                 <h3>Profile</h3>
-                <el-input placeholder="Search for message or users... " suffix-icon="el-icon-search"></el-input>
+                <!-- <el-input placeholder="Search for message or users... " suffix-icon="el-icon-search"></el-input> -->
             </el-col>
         </el-row>
 
         <!-- 卡片1 头像 -->
         <el-row type="flex" justify="center">
-            <el-col :span="18">
+            <el-col :span="24">
                 <el-card class="box-card">
                     <div class="cont1">
                         <div>
-                            <el-image src="https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg" fit="cover"></el-image>
+                            <el-avatar :size="80" src="https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg" fit="fit">
+                                <!-- <el-image src="https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg" fit="cover"></el-image> -->
+                            </el-avatar>
+                            
                         </div>
                         <div>
                             <h3>Matthew Wiggins</h3>
@@ -28,8 +31,8 @@
         </el-row>
         <!-- 卡片2 主体-->
         <el-row type="flex" justify="center">
-            <el-col :span="18">
-                <el-card class="box-card" :span="18">
+            <el-col :span="24">
+                <el-card class="box-card" >
                     <div class="cont2">
                         <div>
                             <p>Country</p>
@@ -67,14 +70,14 @@
                         </div>
                     </div>
                 </el-card>
-            </el-col>            
+            </el-col>
         </el-row>
     </div>
 </template>
 
 <script>
 export default {
-    
+   
 }
 </script>
 
