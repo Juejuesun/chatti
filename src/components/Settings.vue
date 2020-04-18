@@ -114,4 +114,5 @@ export default {
 .el-icon-user{
     font-size: 25px;
 }
+
 </style>

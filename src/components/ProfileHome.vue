@@ -1,8 +1,8 @@
 <template>
     <el-container>
         <!-- 左边区 -->
-        <el-aside>
-            <profile/>
+        <el-aside class="bg">
+                <profile/>
         </el-aside>
         <el-main>
             <settings/>
@@ -22,6 +22,11 @@ export default {
 }
 </script>
 
-<style>
-
+<style scoped>
+.bg {
+    background-color: #EBEEF5;
+    padding: 10px;
+    padding-bottom: 20px;
+    margin-top: 0;
+}
 </style>

@@ -16,7 +16,10 @@ import {
     Footer,
     Header,
     Popover,
-    Avatar
+    Avatar,
+    Menu,
+    Submenu,
+    MenuItem
 } from 'element-ui'
 
 Vue.use(Button)
@@ -35,5 +38,10 @@ Vue.use(Footer)
 Vue.use(Header)
 Vue.use(Popover)
 Vue.use(Avatar)
+Vue.use(Menu)
+Vue.use(Submenu)
+Vue.use(MenuItem)
+
+
 
 Vue.prototype.$message = Message

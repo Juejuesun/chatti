@@ -14,7 +14,7 @@
                 <ChatFooter/>
             </el-footer>
         </el-container>
-        <el-aside>
+        <el-aside v-show="isShow">
             <router-view></router-view>
         </el-aside>
     </el-container>
@@ -27,6 +27,22 @@ export default {
     components: {
         ChatHeader,
         ChatFooter
+    },
+    data() {
+        return {
+            isShow: false
+        }
+    },
+    watch: {
+        $route(to, from) {
+            // console.log(to);
+            // console.log(from);
+            if(to.path === '/home/chatroom') {
+                this.isShow = false
+            } else {
+                this.isShow = true
+            }
+        }
     }
 }
 </script>
@@ -34,5 +50,8 @@ export default {
 <style scoped>
 .maincontent{
     height: 400px;
+}
+.bg {
+    /* background: red; */
 }
 </style>

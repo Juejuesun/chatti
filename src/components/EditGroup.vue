@@ -1,8 +1,10 @@
 <template>
     <div>
+        <i class="el-icon-arrow-left" @click="back"></i>
         <el-row type="flex" justify="center">
             <el-col :span="24">
                 <el-card class="box-card">
+                    <!-- <i class="el-icon-arrow-left" @click="back"></i> -->
                     <div class="cont1">
                         <div>
                            <el-avatar :size="80" src="https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg" fit="fit">
@@ -21,6 +23,7 @@
         </el-row>
 
         <!-- 表单区 -->
+        <div class="bg">
         <el-row type="flex" justify="center">
             <el-col :span="24">
                 <el-form label-position="top" >
@@ -50,6 +53,7 @@
                 <el-button type="primary" >Save Preferences</el-button>
             <!-- </el-col> -->
         </el-row>
+        </div>
     </div>
 </template>
 
@@ -75,6 +79,10 @@ export default {
                 this.$message.error('上传头像图片大小不能超过 2MB!');
             }
             return isJPG && isLt2M;
+        },
+        back() {
+            // console.log(this.$router) 
+            this.$router.push('/home/chatroom')
         }
     }
 }
@@ -93,7 +101,8 @@ export default {
 }
 .box-card{
     margin-top: 15px;
-    margin-bottom: 10px;
+    /* margin-bottom: 10px; */
+    margin-bottom: 0;
 }
 .avatar-uploader .el-upload {
     border: 1px dashed #d9d9d9;
@@ -117,5 +126,14 @@ export default {
     width: 178px;
     height: 178px;
     display: block;
+}
+.el-icon-arrow-left {
+    cursor: pointer;
+}
+.bg {
+    background-color: #EBEEF5;
+    padding: 10px;
+    padding-bottom: 20px;
+    margin-top: 0;
 }
 </style>

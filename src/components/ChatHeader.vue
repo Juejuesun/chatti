@@ -82,5 +82,6 @@ h5{
 }
 i{
     margin: 15px;
+    cursor: pointer;
 }
 </style>

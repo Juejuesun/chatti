@@ -2,7 +2,7 @@
     <div>
         <div class="cont">
             <el-input placeholder="Search for message or users... " suffix-icon="fa fa-smile-o"></el-input>
-             <el-button type="primary" icon="el-icon-s-promotion" circle></el-button>
+            <el-button class="thisBtn" type="primary" icon="el-icon-s-promotion" circle></el-button>
         </div>
         <!-- <i class="fa fa-smile-o"></i> -->
     </div>
@@ -22,5 +22,8 @@ export default {
     margin-right: 15px;
     margin-bottom: 15px;
     margin-top: 15px;
+}
+.thisBtn{
+    margin-left: 10px;
 }
 </style>
