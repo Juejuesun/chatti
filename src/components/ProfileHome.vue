@@ -2,7 +2,7 @@
     <el-container>
         <!-- 左边区 -->
         <el-aside class="bg">
-                <profile/>
+            <profile/>
         </el-aside>
         <el-main>
             <settings/>

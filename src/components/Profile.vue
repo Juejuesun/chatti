@@ -20,10 +20,10 @@
                             
                         </div>
                         <div>
-                            <h3>Matthew Wiggins</h3>
+                            <h3>{{groupInfo.groupName}}</h3>
                         </div>
                         <div>
-                            <p>Bootstrap is an open source toolkit for developing web with HTML.</p>
+                            <p>{{groupInfo.groupDiscription}}</p>
                         </div>
                     </div>
                 </el-card>
@@ -36,7 +36,7 @@
                     <div class="cont2">
                         <div>
                             <p>Country</p>
-                            <h4>Warsaw, Poland</h4>
+                            <h4>{{memberInfo.memberCountry}}</h4>
                         </div>
                         <div>
                             <i class="el-icon-map-location"></i>
@@ -45,7 +45,7 @@
                     <div class="cont2">
                         <div>
                             <p>Phone</p>
-                            <h4>+39 02 87 21 43 19</h4>
+                            <h4>{{memberInfo.memberPhone}}</h4>
                         </div>
                         <div>
                             <i class="el-icon-microphone"></i>
@@ -54,7 +54,7 @@
                     <div class="cont2">
                         <div>
                             <p>Email</p>
-                            <h4>anna@gmail.com</h4>
+                            <h4>{{memberInfo.memberEmail}}</h4>
                         </div>
                         <div>
                             <i class="el-icon-message"></i>
@@ -66,7 +66,7 @@
                             <h4>10:00 am</h4>
                         </div>
                         <div>
-                            <i class="el-icon-time"></i>
+                            <i class="el-icon-time" @click="getinfo"></i>
                         </div>
                     </div>
                 </el-card>
@@ -76,8 +76,43 @@
 </template>
 
 <script>
+import {mapState} from 'vuex'
+import axios from 'axios'
+
 export default {
-   
+    data() {
+        return {
+        //    groupInfo: {}
+        }
+    },
+    computed: {
+        ...mapState(['groupInfo','memberInfo'])
+    },
+   methods: {
+       log() {
+        //    console.log(this.memberInfo)
+            var that = this;
+            axios({
+                method: 'post',
+                url: 'http://localhost:3000/list',
+                data: {
+                    id: 5
+                }
+            }).then(function(response){
+                that.getinfo()
+            })
+            
+       },
+       getinfo() {
+           axios.get('user/userInfo')
+            .then(function (response) {
+                console.log(response);
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
+       }
+   }
 }
 </script>
 

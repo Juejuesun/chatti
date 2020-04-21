@@ -12,10 +12,10 @@
                             </el-avatar>
                         </div>
                         <div>
-                            <h3>Bootstrap Themes</h3>
+                            <h3>{{groupInfo.groupName}}</h3>
                         </div>
                         <div>
-                            <p>Bootstrap is an open source toolkit for developing web with HTML, CSS and JS.</p>
+                            <p>{{groupInfo.groupDiscription}}</p>
                         </div>
                     </div>
                 </el-card>
@@ -58,11 +58,15 @@
 </template>
 
 <script>
+import {mapState} from 'vuex'
 export default {
     data() {
         return {
-        imageUrl: ''
+            imageUrl: ''
         };
+    },
+    computed: {
+        ...mapState(['groupInfo'])
     },
     methods: {
         handleAvatarSuccess(res, file) {

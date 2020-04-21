@@ -8,8 +8,8 @@
                     </el-avatar>
                 </div>
                 <div class="msg">
-                    <h5>Matthew Wiggins</h5>
-                    <div class="types">{{members}}members · {{topic}}</div>
+                    <h5>{{groupInfo.groupName}}</h5>
+                    <div class="types">{{groupInfo.groupMembers}}members · {{groupInfo.groupTopic}}</div>
                 </div>
             </div>
             <div>
@@ -31,6 +31,7 @@
 </template>
 
 <script>
+import {mapState} from 'vuex'
 import More from './More'
 export default {
     components: {
@@ -38,10 +39,11 @@ export default {
     },
     data() {
         return {
-            members: 35,
-            topic: 'HTML, CSS and Javascript help',
             search: false
         }
+    },
+    computed: {
+        ...mapState(['groupInfo'])
     }
 }
 </script>

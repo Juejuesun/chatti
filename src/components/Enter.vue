@@ -35,10 +35,9 @@
         </el-row>
         <el-row  type="flex" justify="center">
             <!-- <el-col :span="12"> -->
-                <el-button type="primary" >Create group</el-button>
+                <el-button type="primary">Create group</el-button>
             <!-- </el-col> -->
         </el-row>
-        
          
     </div>
 </template>

@@ -10,7 +10,7 @@
                 </el-avatar>
             </div>
             <div class="msg" @mouseenter="showLink=true" @mouseleave="showLink=false">
-                <h5>Matthew Wiggins</h5>
+                <h5>{{groupInfo.groupName}}</h5>
                 <div class="types">{{url}}<i @click="CopyUrl" v-show="showLink" class="el-icon-link"></i></div>
             </div>
         </div>
@@ -38,14 +38,17 @@
 </template>
 
 <script>
+import {mapState} from 'vuex'
 export default {
     data() {
         return {
-            members: 35,
             url: 'Quick setup and build tools.',
             introduction: 'introduction',
             showLink: false
         }
+    },
+    computed: {
+       ...mapState(['groupInfo','memberInfo'])
     },
     methods: {
         back() {
