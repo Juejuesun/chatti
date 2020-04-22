@@ -3,7 +3,7 @@ module.exports = {
         proxy: {
             '/api': {
                 target: 'http://localhost:8080',
-                changeOrigin: true,
+                changeOrigin: true, // 是否允许跨越, 开发环境中使用
                 pathRewrite: {
                 '^/api': '/mock'
                 }
@@ -13,6 +13,6 @@ module.exports = {
 }
 // module.exports = {
 //     devServer: {
-//        before: require('./public/mock/inedx.js')
+//        before: require('./src/mock/inedx.js')
 //     }
 // }

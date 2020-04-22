@@ -1,10 +1,11 @@
 {
     "code": 0,
-    "msg": "",
+    "msg": "200",
     "data": {
         "topic": "话题",
         "desc": "简介",
         "avatar": "/static/img/room_dC0MmYm9fSvLufUIf-0CAA.png",
-        "name": "房间名称"
+        "name": "房间名称",
+        "roomUrl": "http://localhost/chat/dC0MmYm9fSvLufUIf-0CAA"
     }
 }

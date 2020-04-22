@@ -19,7 +19,8 @@ import {
     Avatar,
     Menu,
     Submenu,
-    MenuItem
+    MenuItem,
+    Drawer
 } from 'element-ui'
 
 Vue.use(Button)
@@ -41,7 +42,7 @@ Vue.use(Avatar)
 Vue.use(Menu)
 Vue.use(Submenu)
 Vue.use(MenuItem)
-
+Vue.use(Drawer)
 
 
 Vue.prototype.$message = Message

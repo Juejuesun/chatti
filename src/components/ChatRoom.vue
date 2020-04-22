@@ -8,6 +8,12 @@
             <el-main class="maincontent">
                 <div>
                     Main
+                    <ul>
+                        <li v-for="(chat, index) in chatText" :key="index">
+                            <h5>{{chat.uname}}</h5>
+                            <p>{{chat.msg}}</p>
+                        </li>
+                    </ul>
                 </div>
             </el-main>
             <el-footer>
@@ -21,6 +27,7 @@
 </template>
 
 <script>
+import {mapState} from 'vuex'
 import ChatHeader from './ChatHeader'
 import ChatFooter from './ChatFooter'
 export default {
@@ -30,7 +37,8 @@ export default {
     },
     data() {
         return {
-            isShow: false
+            isShow: false,
+            // chatTexts: this.chatText
         }
     },
     watch: {
@@ -43,6 +51,18 @@ export default {
                 this.isShow = true
             }
         }
+    },
+    methods: {
+        getChatText() {
+            this.$store.dispatch('getChatText')
+            console.log(this.chatText)
+        }
+    },
+    computed: {
+        ...mapState(['chatText'])
+    },
+    mounted() {
+        this.getChatText();
     }
 }
 </script>
@@ -50,8 +70,5 @@ export default {
 <style scoped>
 .maincontent{
     height: 400px;
-}
-.bg {
-    /* background: red; */
 }
 </style>

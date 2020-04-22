@@ -4,7 +4,7 @@
         <el-row type="flex" justify="center">
             <el-col :span="24" label-position="top">
                 <h3>Create group</h3>
-                <el-input placeholder="Search for message or users... " suffix-icon="el-icon-search"></el-input>
+                <!-- <el-input placeholder="Search for message or users... " suffix-icon="el-icon-search"></el-input> -->
             </el-col>
         </el-row>
 
@@ -22,20 +22,20 @@
                         <el-input type="textarea" placeholder="photo"></el-input>
                     </el-form-item> -->
                     <el-form-item label="Name">
-                        <el-input placeholder="Group Name"></el-input>
+                        <el-input placeholder="Group Name" v-model="name"></el-input>
                     </el-form-item>
                     <el-form-item label="Topic(optional)">
-                        <el-input placeholder="Group Topic"></el-input>
+                        <el-input placeholder="Group Topic" v-model="topic"></el-input>
                     </el-form-item>
                     <el-form-item label="Discription">
-                        <el-input placeholder="Group Discription"></el-input>
+                        <el-input placeholder="Group Discription" v-model="discription"></el-input>
                     </el-form-item>
                 </el-form>        
             </el-col>
         </el-row>
         <el-row  type="flex" justify="center">
             <!-- <el-col :span="12"> -->
-                <el-button type="primary">Create group</el-button>
+                <el-button type="primary" @click="creatGroup">Create group</el-button>
             <!-- </el-col> -->
         </el-row>
          
@@ -43,10 +43,14 @@
 </template>
 
 <script>
+// import axios from 'axios'
 export default {
     data() {
         return {
-        imageUrl: ''
+            imageUrl: '',
+            name: '',
+            topic: '',
+            discription: ''
         };
     },
     methods: {
@@ -64,6 +68,43 @@ export default {
                 this.$message.error('上传头像图片大小不能超过 2MB!');
             }
             return isJPG && isLt2M;
+        },
+        creatGroup() {
+            // let groupInfo = {
+            //     name: this.name,
+            //     topic: this.topic,
+            //     desc: this.discription
+            // }
+            let groupInfo = { //post模拟数据
+                "code": 0,
+                "msg": "200",
+                "data": "http://localhost/chat/dC0MmYm9fSvLufUIf-0CAA"
+            }
+            var that = this;
+            this.$http.post('http://localhost:3000/posts',groupInfo).then(function(response){
+                const res = response.data
+                console.log(res);
+                if(res.code == 0) {
+                    that.$store.dispatch('getGroupInfo')
+                    that.$message({
+                        message:"创建成功!",
+                        type:'success'
+                    })
+                    that.$router.push('/home/chatroom')
+
+                }else {
+                    that.$message({
+                        message:"链接失败!",
+                        type:'error'
+                    })
+                }
+            
+            }).catch(function(error){
+                    that.$message({
+                        message: "链接失败！",
+                        type: 'error'
+                    })
+            })
         }
     }
 }

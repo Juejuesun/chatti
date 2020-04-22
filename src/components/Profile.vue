@@ -77,7 +77,7 @@
 
 <script>
 import {mapState} from 'vuex'
-import axios from 'axios'
+// import axios from 'axios'
 
 export default {
     data() {
@@ -104,7 +104,7 @@ export default {
             
        },
        getinfo() {
-           axios.get('user/userInfo')
+           this.$http.get('roommsg.json')
             .then(function (response) {
                 console.log(response);
             })

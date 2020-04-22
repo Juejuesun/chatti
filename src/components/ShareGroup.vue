@@ -11,7 +11,7 @@
             </div>
             <div class="msg" @mouseenter="showLink=true" @mouseleave="showLink=false">
                 <h5>{{groupInfo.groupName}}</h5>
-                <div class="types">{{url}}<i @click="CopyUrl" v-show="showLink" class="el-icon-link"></i></div>
+                <div class="types">{{groupInfo.groupUrl}}<i @click="CopyUrl" v-show="showLink" class="el-icon-link"></i></div>
             </div>
         </div>
         <div>
@@ -42,7 +42,6 @@ import {mapState} from 'vuex'
 export default {
     data() {
         return {
-            url: 'Quick setup and build tools.',
             introduction: 'introduction',
             showLink: false
         }
@@ -56,7 +55,7 @@ export default {
             this.$router.push('/home/chatroom')
         },
         CopyUrl(data){
-            let Url2 = this.url;
+            let Url2 = this.groupInfo.groupUrl;
             let oInput = document.createElement("input");
             oInput.value = Url2;
             document.body.appendChild(oInput);
@@ -65,8 +64,8 @@ export default {
             oInput.className = "oInput";
             oInput.style.display = "none";
             this.$message({
-            message:"复制成功!",
-            type:'success'
+                message:"复制成功!",
+                type:'success'
             })
         }
     }
