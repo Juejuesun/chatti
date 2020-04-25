@@ -3,7 +3,8 @@ import App from './App.vue'
 import router from './router'
 import './plugins/element.js'
 import store from './store'
-
+import VueSocketIo from 'vue-socket.io'
+import SocketIO from "socket.io-client"
 import axios from 'axios'
 //配置请求根路径
 axios.defaults.baseURL = 'http://localhost:8080/mock'
@@ -14,7 +15,18 @@ axios.defaults.baseURL = 'http://localhost:8080/mock'
 // })
 Vue.prototype.$http = axios
 
-Vue.config.productionTip = false
+// Vue.config.productionTip = false
+
+Vue.use(new VueSocketIo({
+  debug: true,
+  connection: SocketIO('http://localhost:8081'),
+  vuex: {
+    store,
+    mutationPrefix: "SOCKET_",
+    actionPrefix: "SOCKET_"
+
+  }
+}))
 
 new Vue({
   router,

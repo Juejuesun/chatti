@@ -20,10 +20,10 @@
                             
                         </div>
                         <div>
-                            <h3>{{groupInfo.groupName}}</h3>
+                            <h3>{{memberInfo.memberName}}</h3>
                         </div>
                         <div>
-                            <p>{{groupInfo.groupDiscription}}</p>
+                            <p>{{memberInfo.memberDes}}</p>
                         </div>
                     </div>
                 </el-card>
@@ -86,7 +86,7 @@ export default {
         }
     },
     computed: {
-        ...mapState(['groupInfo','memberInfo'])
+        ...mapState(['memberInfo'])
     },
    methods: {
        log() {

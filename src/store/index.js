@@ -12,10 +12,12 @@ export default new Vuex.Store({
       groupDiscription: 'Bootstrap is an open source toolkit for developing web with HTML, CSS and JS.',
       groupUrl: 'Quick setup and build tools.'
     },
-    groupMembers: 36,
+    groupMembers: 1,
     defaultActive: 'enter',
     isShowState: true,
     memberInfo: {
+      memberName: 'Danny',
+      memberDes: 'No Description',
       memberCountry: 'Warsaw, Poland',
       memberPhone: '+39 02 87 21 43 19',
       memberEmail: 'anna@gmail.com',
@@ -58,6 +60,28 @@ export default new Vuex.Store({
         state.searchChatText = [{uname: '无此用户！', msg: '无记录！'}]
       }
       console.log(state.searchChatText)
+    },
+    savePreferences(state,{data}) {
+      let orname = state.memberInfo.memberName
+      if(data.uname.trim()) {
+        state.memberInfo.memberName = data.uname
+      }else {
+        state.memberInfo.memberName = orname
+      }
+      if(data.uphone) {
+        state.memberInfo.memberPhone = data.uphone
+      }
+      if(data.uemail) {
+        state.memberInfo.memberEmail = data.uemail
+      }if(data.udiscription) {
+        state.memberInfo.memberDes = data.udiscription
+      }
+    },
+    SOCKET_clientNum(state, data) {
+      state.groupMembers = data;
+    },
+    getUname(state) {
+      state.memberInfo.memberName = window.sessionStorage.getItem('USERNAME')
     }
   },
   actions: {
@@ -69,6 +93,13 @@ export default new Vuex.Store({
     },
     showSearch({commit},search) {
       commit('showSearch',{search})
+    },
+    savePreferences({commit},data){
+      commit('savePreferences',{data})
+    },
+    getUname({commit}) {
+      commit('getUname')
+      commit('getGroupInfo')
     }
   },
   modules: {

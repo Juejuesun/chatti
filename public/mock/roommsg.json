@@ -6,6 +6,7 @@
         "desc": "简介",
         "avatar": "/static/img/room_dC0MmYm9fSvLufUIf-0CAA.png",
         "name": "房间名称",
-        "roomUrl": "http://localhost/chat/dC0MmYm9fSvLufUIf-0CAA"
+        "roomUrl": "http://localhost:8080/#/home/chatroom"
+
     }
 }

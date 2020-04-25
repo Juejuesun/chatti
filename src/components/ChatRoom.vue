@@ -17,7 +17,11 @@
                 </div>
             </el-main>
             <el-footer>
-                <ChatFooter/>
+                <!-- <ChatFooter/> -->
+                <div class="cont">
+                    <el-input placeholder="Search for message or users... " suffix-icon="fa fa-smile-o" v-model="msg"></el-input>
+                    <el-button class="thisBtn" type="primary" icon="el-icon-s-promotion" circle @click="send"></el-button>
+                </div>
             </el-footer>
         </el-container>
         <el-aside v-show="isShow">
@@ -27,18 +31,19 @@
 </template>
 
 <script>
-import {mapState} from 'vuex'
+import {mapState, mapActions} from 'vuex'
 import ChatHeader from './ChatHeader'
-import ChatFooter from './ChatFooter'
+// import ChatFooter from './ChatFooter'
 export default {
     components: {
         ChatHeader,
-        ChatFooter
+        // ChatFooter
     },
     data() {
         return {
             isShow: false,
             // chatTexts: this.chatText
+            msg: '',
         }
     },
     watch: {
@@ -53,16 +58,40 @@ export default {
         }
     },
     methods: {
+        // ...mapState(['getGroupInfo']),
         getChatText() {
             this.$store.dispatch('getChatText')
             console.log(this.chatText)
+        },
+        send() {
+            let transdata = {
+                msg:this.msg,
+                uname:this.memberInfo.memberName
+            }
+            this.$socket.emit("msg",transdata);
+            this.msg = ''
         }
     },
     computed: {
-        ...mapState(['chatText'])
+        ...mapState(['chatText','memberInfo'])
     },
-    mounted() {
-        this.getChatText();
+    // mounted() {
+    //     // this.getChatText();
+    //     // this.$socket.emit('login','haha');
+        
+    // },
+    sockets:{ //在此接收又服务器发送过来的数据 ps：注意此处的方法名要与服务器的发送的事件保持一致才能接收到
+        connect() {      //与ws:127.0.0.1:8000连接后回调
+            console.log('连接成功');
+        },
+        clientNum(Num){
+            console.log(Num)
+            // this.groupMembers = Num
+        },
+        broadcastMsg(data) {
+            console.log(data)
+            this.chatText.push(data)//调试时使用
+        }
     }
 }
 </script>
@@ -70,5 +99,16 @@ export default {
 <style scoped>
 .maincontent{
     height: 400px;
+}
+.cont{
+    display: flex;
+    flex: 1;
+    margin-left: 15px;
+    margin-right: 15px;
+    margin-bottom: 15px;
+    margin-top: 15px;
+}
+.thisBtn{
+    margin-left: 10px;
 }
 </style>

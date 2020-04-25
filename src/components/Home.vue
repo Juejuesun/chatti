@@ -45,7 +45,7 @@
 </template>
 
 <script>
-import {mapState} from 'vuex'
+import {mapState, mapActions} from 'vuex'
 export default {
     data() {
         return {
@@ -54,6 +54,12 @@ export default {
     },
     computed: {
         ...mapState(['defaultActive','isShowState'])
+    },
+    methods: {
+        ...mapState(['getGroupInfo'])
+    },
+    mounted() {
+        this.getGroupInfo()
     }
 }
 </script>

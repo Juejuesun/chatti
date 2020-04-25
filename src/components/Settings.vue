@@ -32,20 +32,23 @@
                         <el-input type="textarea" placeholder="photo"></el-input>
                     </el-form-item> -->
                     <el-form-item label="Name">
-                        <el-input placeholder="Type your name"></el-input>
+                        <el-input placeholder="Type your name" v-model="uname"></el-input>
                     </el-form-item>
                     <el-form-item label="Phone">
-                        <el-input placeholder="(123) 456-789"></el-input>
+                        <el-input placeholder="(123) 456-789" v-model="uphone"></el-input>
                     </el-form-item>
                     <el-form-item label="Email">
-                        <el-input placeholder="you@yoursite.com"></el-input>
+                        <el-input placeholder="you@yoursite.com" v-model="uemail"></el-input>
+                    </el-form-item>
+                    <el-form-item label="Discription">
+                        <el-input placeholder="Yourself Discription" v-model="udiscription"></el-input>
                     </el-form-item>
                 </el-form>        
             </el-col>
         </el-row>
         <el-row  type="flex" justify="center">
             <!-- <el-col :span="12"> -->
-                <el-button type="primary" >Save Preferences</el-button>
+                <el-button type="primary" @click="savePreference">Save Preferences</el-button>
             <!-- </el-col> -->
         </el-row>
         
@@ -57,7 +60,11 @@
 export default {
     data() {
         return {
-            imageUrl: ''
+            imageUrl: '',
+            uname: '',
+            uphone: '',
+            uemail: '',
+            udiscription: ''
         };
     },
     methods: {
@@ -75,6 +82,23 @@ export default {
                 this.$message.error('上传头像图片大小不能超过 2MB!');
             }
             return isJPG && isLt2M;
+        },
+        savePreference() {
+            let memberInfo = { //post模拟数据
+                'uname': this.uname,
+                'uphone': this.uphone,
+                'uemail': this.uemail,
+                'udiscription': this.udiscription
+            }
+            this.$store.dispatch('savePreferences',memberInfo)
+            this.uname = ''
+            this.uphone = ''
+            this.uemail = ''
+            this.udiscription = ''
+            this.$message({
+                message:"修改成功!",
+                type:'success'
+            })
         }
     }
 }

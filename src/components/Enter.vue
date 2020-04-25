@@ -90,7 +90,7 @@ export default {
                         message:"创建成功!",
                         type:'success'
                     })
-                    that.$router.push('/home/chatroom')
+                    that.$router.push('/home/signin')
 
                 }else {
                     that.$message({
