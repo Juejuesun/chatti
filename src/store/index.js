@@ -11,9 +11,10 @@ export default new Vuex.Store({
       groupTopic: 'HTML, CSS and Javascript help',
       groupDiscription: 'Bootstrap is an open source toolkit for developing web with HTML, CSS and JS.',
       groupUrl: 'Quick setup and build tools.',
-      groupId: 'dC0MmYm9fSvLufUIf-0CAA'
+      groupId: ''
     },
     groupMembers: 1,
+    sessionId: '',
     defaultActive: 'enter',
     isShowState: true,
     memberInfo: {
@@ -28,7 +29,8 @@ export default new Vuex.Store({
   },
   mutations: {
     async getGroupInfo(state) {
-      const {data: res} = await axios.get('roommsg.json');
+      const {data: restest} = await axios.get('http://localhost:3000/profile',state.groupInfo.groupId);//正式使用
+      const {data: res} = await axios.get('roommsg.json'); //测试使用
         // const res = response.data
         // const rep = {}
         console.log(res)
@@ -36,14 +38,18 @@ export default new Vuex.Store({
           state.groupInfo.groupName = res.data.name
           state.groupInfo.groupTopic = res.data.topic
           state.groupInfo.groupDiscription = res.data.desc
-          state.groupInfo.groupUrl = res.data.roomUrl
         }
         console.log('getGroupInfo!') //调试用
         state.defaultActive = 'chatroom'
         state.isShowState = false
     },
     async getChatText(state) {
-      const {data: res} = await axios.get('chatText.json');
+      const {data: res} = await axios.get('chatText.json');//测试使用
+      let getChatTextInfo = {
+        room: state.groupInfo.groupId,
+        page: 1
+      }
+      const {data: restest} = await axios.post('http://localhost:3000/profile',getChatTextInfo);
       console.log(res)
       if(res.code === 0) {
         state.chatText = res.data
@@ -78,11 +84,17 @@ export default new Vuex.Store({
         state.memberInfo.memberDes = data.udiscription
       }
     },
-    SOCKET_clientNum(state, data) {
+    SOCKET_online_count(state, data) {
       state.groupMembers = data;
+    },
+    SOCKET_sid(state,data) {
+      state.sessionId = data
     },
     getUname(state) {
       state.memberInfo.memberName = window.sessionStorage.getItem('USERNAME')
+    },
+    pushRoomId(state,room) {
+      state.groupInfo.groupId = room
     }
   },
   actions: {
@@ -101,6 +113,9 @@ export default new Vuex.Store({
     getUname({commit}) {
       commit('getUname')
       commit('getGroupInfo')
+    },
+    pushRoomId({commit},room) {
+      commit('pushRoomId',{room})
     }
   },
   modules: {

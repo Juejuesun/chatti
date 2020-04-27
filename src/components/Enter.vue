@@ -44,6 +44,7 @@
 
 <script>
 // import axios from 'axios'
+import {mapState} from 'vuex';
 export default {
     data() {
         return {
@@ -70,27 +71,36 @@ export default {
             return isJPG && isLt2M;
         },
         creatGroup() {
-            // let groupInfo = {
-            //     name: this.name,
-            //     topic: this.topic,
-            //     desc: this.discription
-            // }
-            let groupInfo = { //post模拟数据
+            let groupInfo = {
+                name: this.name,
+                topic: this.topic,
+                desc: this.discription,
+                sid: this.sessionId
+            }
+            // console.log("state中的"+this.sessionId)
+            let groupTestInfo = { //post模拟数据
                 "code": 0,
                 "msg": "200",
                 "data": "http://localhost/chat/dC0MmYm9fSvLufUIf-0CAA"
             }
             var that = this;
             this.$http.post('http://localhost:3000/posts',groupInfo).then(function(response){
-                const res = response.data
-                console.log(res);
+                // const res = response.data
+                const res = groupTestInfo//调试时使用
+                that.groupInfo.groupUrl = res.data
+                let roomStr = res.data.split('/')
+                // console.log(roomStr)
+                // console.log(roomStr[roomStr.length-1].trim())
+                const room = roomStr[roomStr.length-1].trim()
                 if(res.code == 0) {
                     that.$store.dispatch('getGroupInfo')
+                    //推送roomid
+                    that.$store.dispatch('pushRoomId',room)
                     that.$message({
                         message:"创建成功!",
                         type:'success'
                     })
-                    that.$router.push('/home/signin')
+                    that.$router.push('/home/signin')//测试时用
 
                 }else {
                     that.$message({
@@ -106,6 +116,10 @@ export default {
                     })
             })
         }
+    },
+    computed: {
+        ...mapState(['sessionId','groupInfo'])
+
     }
 }
 </script>

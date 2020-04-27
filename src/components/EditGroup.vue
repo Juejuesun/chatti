@@ -72,7 +72,7 @@ export default {
         };
     },
     computed: {
-        ...mapState(['groupInfo'])
+        ...mapState(['groupInfo','sessionId'])
     },
     methods: {
         handleAvatarSuccess(res, file) {
@@ -95,7 +95,7 @@ export default {
             this.$router.push('/home/chatroom')
         },
         async saveEditGro() {
-            this.editInfo.sid = this.groupInfo.groupId
+            this.editInfo.sid = this.sessionId
             // console.log(this.editInfo)
             const {data: res} = await this.$http.put('http://localhost:3000/comments', this.editInfo)
             console.log(res)

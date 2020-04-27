@@ -5,7 +5,7 @@
                 <div>Mute</div>
                 <div><i class="fa fa-sliders"></i></div>
             </router-link>
-            <div class="contin">
+            <div class="contin" @click="deleteRoom">
                 <div>Delete</div>
                 <div><i class="el-icon-delete"></i></div>
             </div>
@@ -14,8 +14,18 @@
 </template>
 
 <script>
+import {mapState} from 'vuex'
 export default {
-
+    computed: {
+        ...mapState(['sessionId'])
+    },
+    methods: {
+        async deleteRoom() {
+            const {data: res} = await this.$http('http://localhost:3000/profile',this.sessionId)
+            console.log(res)
+            alert('删除成功！')
+        }
+    }
 }
 </script>
 

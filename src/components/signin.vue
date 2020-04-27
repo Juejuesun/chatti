@@ -35,14 +35,32 @@ export default {
         }
     },
     computed: {
-        ...mapState(['chatText','memberInfo','groupInfo'])
+        ...mapState(['chatText','memberInfo','groupInfo','sessionId'])
+    },
+    watch: {
+        $route(to, from) {
+            // console.log(to);
+            // console.log(from);
+            if(from.path !== '/home/enter') { //如果上一页面时enter 则要获取roomis
+                //获取roomid
+                let path = this.$route.path
+                let pathStr = path.split('/')
+                const pathis = pathStr[pathStr.length-1]
+                console.log(pathis)
+                //推送roomid
+                this.$store.dispatch('pushRoomId',pathis)
+            }
+        }
     },
     methods: {
         signin() {
-            this.$refs.loginFormRef.validate((valid) => {
+            this.$refs.loginFormRef.validate(async (valid) => {
                 if (valid) {
                     alert('submit!');
                     window.sessionStorage.setItem('USERNAME',this.loginForm.username)
+                    if(!this.groupInfo.groupId) {
+                        await this.getroomid()
+                    }
                     let sig = {
                         name: this.loginForm.username,
                         room: this.groupInfo.groupId
@@ -54,7 +72,20 @@ export default {
                     console.log('error submit!!');
                     return false;
                 }
-            }); 
+            });
+            // console.log('signin中的'+this.sessionId,this.groupInfo.groupId)
+        },
+        getroomid() {
+            let path = this.$route.path
+                let pathStr = path.split('/')
+                const pathis = pathStr[pathStr.length-1].trim()
+                console.log(pathis)
+                //推送roomid
+                this.$store.dispatch('pushRoomId',pathis)
+                const groupUrl = ('http://localhost/chat/'+pathis).trim()
+                // console.log('前'+this.groupInfo.groupUrl)
+                this.groupInfo.groupUrl = groupUrl
+                // console.log('后'+this.groupInfo.groupUrl)
         }
     }
 }

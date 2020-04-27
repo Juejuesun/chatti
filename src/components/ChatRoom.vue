@@ -19,7 +19,7 @@
             <el-footer>
                 <!-- <ChatFooter/> -->
                 <div class="cont">
-                    <el-input placeholder="Search for message or users... " suffix-icon="fa fa-smile-o" v-model="msg"></el-input>
+                    <el-input placeholder="Search for message or users... " suffix-icon="fa fa-smile-o" v-model="msg" @keyup.enter.native="send"></el-input>
                     <el-button class="thisBtn" type="primary" icon="el-icon-s-promotion" circle @click="send"></el-button>
                 </div>
             </el-footer>
@@ -34,6 +34,7 @@
 import {mapState, mapActions} from 'vuex'
 import ChatHeader from './ChatHeader'
 // import ChatFooter from './ChatFooter'
+const moment = require("moment")
 export default {
     components: {
         ChatHeader,
@@ -50,7 +51,7 @@ export default {
         $route(to, from) {
             // console.log(to);
             // console.log(from);
-            if(to.path === '/home/chatroom') {
+            if(to.path === '/home/chatroom') { //隐藏侧边卡片
                 this.isShow = false
             } else {
                 this.isShow = true
@@ -65,13 +66,18 @@ export default {
         },
         send() {
             let transdata = {
-                msg:this.msg,
-                uname:this.memberInfo.memberName,
-                room: this.groupInfo.groupId
+                msg: this.msg,
+                name: this.memberInfo.memberName,
+                room: this.groupInfo.groupId,
+                date: moment().format("HH:mm:ss")
             }
+            // console.log(transdata)
             this.$socket.emit("chat",transdata);
             this.msg = ''
         }
+    },
+    created() {
+        this.$socket.emit("online_cnt", this.groupInfo.groupId)
     },
     computed: {
         ...mapState(['chatText','memberInfo','groupInfo'])
@@ -100,7 +106,8 @@ export default {
         response(respond) {
             console.log(respond)
             let joinmsg = {
-                 uname: respond
+                 uname: respond,
+                 msg: ''
             }
             this.chatText.push(joinmsg)//调试时使用
         }
