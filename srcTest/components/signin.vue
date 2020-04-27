@@ -82,7 +82,7 @@ export default {
                 console.log(pathis)
                 //推送roomid
                 this.$store.dispatch('pushRoomId',pathis)
-                const groupUrl = ('http://localhost/chat/'+pathis).trim() //存疑
+                const groupUrl = ('http://localhost/chat/'+pathis).trim()
                 // console.log('前'+this.groupInfo.groupUrl)
                 this.groupInfo.groupUrl = groupUrl
                 // console.log('后'+this.groupInfo.groupUrl)

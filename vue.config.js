@@ -9,6 +9,9 @@ module.exports = {
                 }
             }
         }
+    },
+    css: {
+        extract: false
     }
 }
 // module.exports = {

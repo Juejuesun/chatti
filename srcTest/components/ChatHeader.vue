@@ -26,6 +26,14 @@
         </div>
         <div v-show="search">
             <el-input placeholder="Search this chat" suffix-icon="el-icon-search" v-model="sec" @keyup.enter.native="searchTextNow"></el-input>
+            <!-- <el-card>
+                <ul style="background-color: yellow">
+                    <li v-for="(chat, index) in searchChatText" :key="index">
+                        <h5>{{chat.uname}}</h5>
+                        <p>{{chat.msg}}</p>
+                    </li>
+                </ul>
+            </el-card> -->
             <el-drawer title="查找记录" :visible.sync="drawer" direction="btt" :with-header="false" :size="'60%'">
                 <h5>查找记录</h5>
                 <ul style="background-color: pink">
@@ -57,6 +65,12 @@ export default {
         ...mapState(['groupInfo','groupMembers','searchChatText']),
         
     },
+    // watch: {
+    //     'sec': function() {
+    //         console.log(this.sec)
+    //         this.$store.dispatch('showSearch',this.sec)
+    //     }
+    // },
     methods: {
         searchTextNow() {
             console.log(this.sec)

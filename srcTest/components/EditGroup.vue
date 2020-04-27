@@ -97,8 +97,7 @@ export default {
         async saveEditGro() {
             this.editInfo.sid = this.sessionId
             // console.log(this.editInfo)
-            // const {data: res} = await this.$http.put('http://localhost:3000/comments', this.editInfo)//t调试接口
-            const {data: res} = await this.$http.put('v1/rooms', this.editInfo) //房间设置
+            const {data: res} = await this.$http.put('http://localhost:3000/comments', this.editInfo)
             console.log(res)
             this.$store.dispatch('getGroupInfo')
         }

@@ -87,7 +87,32 @@ export default {
     },
     computed: {
         ...mapState(['memberInfo'])
-    }
+    },
+   methods: {
+       log() {
+        //    console.log(this.memberInfo)
+            var that = this;
+            axios({
+                method: 'post',
+                url: 'http://localhost:3000/list',
+                data: {
+                    id: 5
+                }
+            }).then(function(response){
+                that.getinfo()
+            })
+            
+       },
+       getinfo() {
+           this.$http.get('roommsg.json')
+            .then(function (response) {
+                console.log(response);
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
+       }
+   }
 }
 </script>
 
