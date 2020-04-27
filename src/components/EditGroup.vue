@@ -37,20 +37,20 @@
                         <el-input type="textarea" placeholder="photo"></el-input>
                     </el-form-item> -->
                     <el-form-item label="Name">
-                        <el-input placeholder="Group Name"></el-input>
+                        <el-input placeholder="Group Name" v-model="editInfo.gname"></el-input>
                     </el-form-item>
                     <el-form-item label="Topic(optional)">
-                        <el-input placeholder="Group Topic"></el-input>
+                        <el-input placeholder="Group Topic" v-model="editInfo.gtopic"></el-input>
                     </el-form-item>
                     <el-form-item label="Discription">
-                        <el-input placeholder="Group Discription"></el-input>
+                        <el-input placeholder="Group Discription" v-model="editInfo.gdec"></el-input>
                     </el-form-item>
                 </el-form>        
             </el-col>
         </el-row>
         <el-row  type="flex" justify="center">
             <!-- <el-col :span="12"> -->
-                <el-button type="primary" >Save Preferences</el-button>
+                <el-button type="primary" @click="saveEditGro">Save Preferences</el-button>
             <!-- </el-col> -->
         </el-row>
         </div>
@@ -62,7 +62,13 @@ import {mapState} from 'vuex'
 export default {
     data() {
         return {
-            imageUrl: ''
+            imageUrl: '',
+            editInfo: {
+                gname: '',
+                gtopic: '',
+                gdec: '',
+                sid: ''
+            }  
         };
     },
     computed: {
@@ -87,6 +93,13 @@ export default {
         back() {
             // console.log(this.$router) 
             this.$router.push('/home/chatroom')
+        },
+        async saveEditGro() {
+            this.editInfo.sid = this.groupInfo.groupId
+            // console.log(this.editInfo)
+            const {data: res} = await this.$http.put('http://localhost:3000/comments', this.editInfo)
+            console.log(res)
+            this.$store.dispatch('getGroupInfo')
         }
     }
 }

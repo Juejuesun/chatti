@@ -35,7 +35,7 @@ export default {
         }
     },
     computed: {
-        ...mapState(['memberInfo'])
+        ...mapState(['chatText','memberInfo','groupInfo'])
     },
     methods: {
         signin() {
@@ -43,9 +43,13 @@ export default {
                 if (valid) {
                     alert('submit!');
                     window.sessionStorage.setItem('USERNAME',this.loginForm.username)
+                    let sig = {
+                        name: this.loginForm.username,
+                        room: this.groupInfo.groupId
+                    }
                     this.$router.push('/home/chatroom')
                     this.$store.dispatch('getUname')
-                    this.$socket.emit("online",this.memberInfo.memberName);
+                    this.$socket.emit("join",sig);
                 } else {
                     console.log('error submit!!');
                     return false;

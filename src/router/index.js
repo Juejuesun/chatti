@@ -22,10 +22,6 @@ const routes = [
     // redirect: '/home',
     children: [
       {
-        path: '',
-        redirect: '/home/enter'
-      },
-      {
         path: '/home/enter',
         component: Enter
       },
@@ -50,6 +46,10 @@ const routes = [
             component: EditGroup
           }
         ]
+      },
+      {
+        path: '',
+        redirect: '/home/enter'
       }
     ]
   }

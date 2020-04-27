@@ -66,14 +66,15 @@ export default {
         send() {
             let transdata = {
                 msg:this.msg,
-                uname:this.memberInfo.memberName
+                uname:this.memberInfo.memberName,
+                room: this.groupInfo.groupId
             }
-            this.$socket.emit("msg",transdata);
+            this.$socket.emit("chat",transdata);
             this.msg = ''
         }
     },
     computed: {
-        ...mapState(['chatText','memberInfo'])
+        ...mapState(['chatText','memberInfo','groupInfo'])
     },
     // mounted() {
     //     // this.getChatText();
@@ -84,13 +85,24 @@ export default {
         connect() {      //与ws:127.0.0.1:8000连接后回调
             console.log('连接成功');
         },
-        clientNum(Num){
+        online_count(Num){
             console.log(Num)
             // this.groupMembers = Num
         },
-        broadcastMsg(data) {
+        chat(data) {
             console.log(data)
-            this.chatText.push(data)//调试时使用
+            let chatmsg = {
+                uname: data.uname,
+                msg: data.msg
+            }
+            this.chatText.push(chatmsg)//调试时使用
+        },
+        response(respond) {
+            console.log(respond)
+            let joinmsg = {
+                 uname: respond
+            }
+            this.chatText.push(joinmsg)//调试时使用
         }
     }
 }

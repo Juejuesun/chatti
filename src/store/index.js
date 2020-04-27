@@ -10,7 +10,8 @@ export default new Vuex.Store({
       groupName: 'Matthew Wiggins',
       groupTopic: 'HTML, CSS and Javascript help',
       groupDiscription: 'Bootstrap is an open source toolkit for developing web with HTML, CSS and JS.',
-      groupUrl: 'Quick setup and build tools.'
+      groupUrl: 'Quick setup and build tools.',
+      groupId: 'dC0MmYm9fSvLufUIf-0CAA'
     },
     groupMembers: 1,
     defaultActive: 'enter',
@@ -37,7 +38,7 @@ export default new Vuex.Store({
           state.groupInfo.groupDiscription = res.data.desc
           state.groupInfo.groupUrl = res.data.roomUrl
         }
-        // console.log(state.groupInfo)
+        console.log('getGroupInfo!') //调试用
         state.defaultActive = 'chatroom'
         state.isShowState = false
     },
