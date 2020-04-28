@@ -5,42 +5,21 @@
                 <ChatHeader/>
             </el-header>
              
-            <el-main class="maincontent" id="dialogue_box">
+            <el-main class="maincontent">
                 <div>
-                    <!-- Main
+                    Main
                     <ul>
                         <li v-for="(chat, index) in chatText" :key="index">
                             <h5>{{chat.uname}}</h5>
                             <p>{{chat.msg}}</p>
                         </li>
-                    </ul> -->
-                    <div v-for="(chat, index) in chatText" :key="index">
-                        <div v-if="chat.msgType == 'respond'" class="respondMsg">
-                            <div class="sysTime">{{chat.date}}</div>
-                            <div class="respond">{{chat.uname}}</div>
-                        </div>
-                        <div v-else-if="chat.msgType == 'msgres'" class="msgresMsg">
-                            <div v-if="chat.uname==memberInfo.memberName" class="self">
-                                <el-card class="box-card" shadow="hover" style="background-color: #409EFF; color: #FFFFFF">
-                                    <div>{{chat.msg}}</div>
-                                    <div class="msgdate">{{chat.date}}</div>
-                                </el-card>
-                                <el-avatar class="msgName" :size="50">{{chat.uname}}</el-avatar>
-                            </div>
-                            <div v-else class="others">
-                                 <el-avatar class="msgName" :size="50">{{chat.uname}}</el-avatar>
-                                <el-card class="box-card" shadow="hover">
-                                    <div>{{chat.msg}}</div>
-                                    <div class="msgdate">{{chat.date}}</div>
-                                </el-card>
-                            </div>
-                        </div>
-                    </div>
+                    </ul>
                 </div>
             </el-main>
             <el-footer>
+                <!-- <ChatFooter/> -->
                 <div class="cont">
-                    <el-input placeholder="Send your message..." suffix-icon="fa fa-smile-o" v-model="msg" @keyup.enter.native="send"></el-input>
+                    <el-input placeholder="Search for message or users... " suffix-icon="fa fa-smile-o" v-model="msg" @keyup.enter.native="send"></el-input>
                     <el-button class="thisBtn" type="primary" icon="el-icon-s-promotion" circle @click="send"></el-button>
                 </div>
             </el-footer>
@@ -54,12 +33,12 @@
 <script>
 import {mapState, mapActions} from 'vuex'
 import ChatHeader from './ChatHeader'
-
+// import ChatFooter from './ChatFooter'
 const moment = require("moment")
 export default {
     components: {
         ChatHeader,
-        // chatBubble
+        // ChatFooter
     },
     data() {
         return {
@@ -95,12 +74,6 @@ export default {
             // console.log(transdata)
             this.$socket.emit("chat",transdata);
             this.msg = ''
-        },
-        roolDown() {
-            this.$nextTick(function(){
-            var div = document.getElementById('dialogue_box');
-            div.scrollTop = div.scrollHeight;
-            })
         }
     },
     created() {
@@ -126,25 +99,18 @@ export default {
             console.log(data)
             let chatmsg = {
                 uname: data.uname,
-                msg: data.msg,
-                date: moment().format("HH:mm:ss"),
-                msgType: 'msgres'
+                msg: data.msg
             }
             this.chatText.push(chatmsg)//调试时使用
         },
         response(respond) {
             console.log(respond)
             let joinmsg = {
-                uname: respond,
-                msg: '',
-                date: moment().format("HH:mm:ss"),
-                msgType: 'respond'
+                 uname: respond,
+                 msg: ''
             }
             this.chatText.push(joinmsg)//调试时使用
         }
-    },
-    updated() {
-        this.roolDown()
     }
 }
 </script>
@@ -163,47 +129,5 @@ export default {
 }
 .thisBtn{
     margin-left: 10px;
-}
-.respondMsg {
-    display: flex;
-    /* justify-content: center; */
-    flex-direction: column;
-    /* background-color: aqua; */
-}
-.sysTime {
-    align-self: center;
-    font-size: 12px;
-    margin-top: 10px;
-}
-.respond {
-    align-self: center;
-    font-size: 12px;
-    color: #FFFFFF;
-    background-color: #909399;
-    padding: 6px;
-    border-radius: 11px;
-}
-.box-card{
-    width: 380px;
-    background-color: #EBEEF5;
-    margin: 10px;
-    
-}
-.msgdate{
-    font-size: 10px;
-    margin-top: 10px;
-}
-.self {
-    display: flex;
-    flex: 1;
-    justify-content: flex-end;
-}
-.others {
-    display: flex;
-    flex: 1;
-    justify-content: flex-start;
-}
-.msgName {
-    align-self: center;
 }
 </style>

@@ -66,7 +66,7 @@
                             <h4>10:00 am</h4>
                         </div>
                         <div>
-                            <i class="el-icon-time"></i>
+                            <i class="el-icon-time" @click="getinfo"></i>
                         </div>
                     </div>
                 </el-card>

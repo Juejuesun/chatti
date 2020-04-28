@@ -11,7 +11,7 @@
         <!-- 表单区 -->
         <el-row type="flex" justify="center">
             <el-col :span="15">
-                <el-form label-position="top" ref="loginFormRef" :model="loginForm" :rules="loginFormRules">
+                <el-form label-position="top" >
                     <div class="cont1">
                         <div>
                             <h3>Account</h3>
@@ -31,17 +31,17 @@
                     <!-- <el-form-item label="Photo">
                         <el-input type="textarea" placeholder="photo"></el-input>
                     </el-form-item> -->
-                    <el-form-item label="Name" prop="username">
-                        <el-input placeholder="Type your name" v-model="loginForm.username"></el-input>
+                    <el-form-item label="Name">
+                        <el-input placeholder="Type your name" v-model="uname"></el-input>
                     </el-form-item>
                     <el-form-item label="Phone">
-                        <el-input placeholder="(123) 456-789" v-model="loginForm.uphone"></el-input>
+                        <el-input placeholder="(123) 456-789" v-model="uphone"></el-input>
                     </el-form-item>
                     <el-form-item label="Email">
-                        <el-input placeholder="you@yoursite.com" v-model="loginForm.uemail"></el-input>
+                        <el-input placeholder="you@yoursite.com" v-model="uemail"></el-input>
                     </el-form-item>
                     <el-form-item label="Discription">
-                        <el-input placeholder="Yourself Discription" v-model="loginForm.udiscription"></el-input>
+                        <el-input placeholder="Yourself Discription" v-model="udiscription"></el-input>
                     </el-form-item>
                 </el-form>        
             </el-col>
@@ -57,27 +57,15 @@
 </template>
 
 <script>
-import {mapState} from 'vuex'
 export default {
     data() {
         return {
             imageUrl: '',
-            loginForm:{
-                username: "",
-                uphone: '',
-                uemail: '',
-                udiscription: '',
-            },
-            loginFormRules:{
-                //用户名是否合法
-                username:[
-                    { required: true, message: '请输入昵称', trigger: 'blur' }
-                ]
-            }
+            uname: '',
+            uphone: '',
+            uemail: '',
+            udiscription: ''
         };
-    },
-    computed: {
-        ...mapState(['chatText','memberInfo','groupInfo','sessionId'])
     },
     methods: {
         handleAvatarSuccess(res, file) {
@@ -96,54 +84,21 @@ export default {
             return isJPG && isLt2M;
         },
         savePreference() {
-            this.$refs.loginFormRef.validate(async (valid) => {
-                if (valid) {
-                    let memberInfo = { //post模拟数据
-                        'uname': this.loginForm.username,
-                        'uphone': this.loginForm.uphone,
-                        'uemail': this.loginForm.uemail,
-                        'udiscription': this.loginForm.udiscription
-                    }
-                    // socket 事件
-                    window.sessionStorage.setItem('USERNAME',this.loginForm.username)
-                    if(!this.groupInfo.groupId) {
-                        await this.getroomid()
-                    }
-                    let sig = {
-                        name: this.loginForm.username,
-                        room: this.groupInfo.groupId
-                    }
-                    this.$router.push('/home/chatroom')//做一个守卫
-                    this.$store.dispatch('getUname')
-                    this.$socket.emit("join",sig);
-
-                    this.$store.dispatch('savePreferences',memberInfo) //strot事件
-                    this.$refs.loginFormRef.resetFields();
-                    this.$message({
-                        message:"设置成功,快去聊天吧!",
-                        type:'success'
-                    })
-                } else {
-                    console.log('error submit!!');
-                    this.$message({
-                        message:"请输入昵称!",
-                        type:'error'
-                    })
-                    return false;
-                }
-            });
-        },
-        getroomid() {
-            let path = this.$route.path
-                let pathStr = path.split('/')
-                const pathis = pathStr[pathStr.length-1].trim()
-                console.log(pathis)
-                //推送roomid
-                this.$store.dispatch('pushRoomId',pathis)
-                const groupUrl = ('http://localhost/chat/'+pathis).trim() //存疑
-                // console.log('前'+this.groupInfo.groupUrl)
-                this.groupInfo.groupUrl = groupUrl
-                // console.log('后'+this.groupInfo.groupUrl)
+            let memberInfo = { //post模拟数据
+                'uname': this.uname,
+                'uphone': this.uphone,
+                'uemail': this.uemail,
+                'udiscription': this.udiscription
+            }
+            this.$store.dispatch('savePreferences',memberInfo)
+            this.uname = ''
+            this.uphone = ''
+            this.uemail = ''
+            this.udiscription = ''
+            this.$message({
+                message:"修改成功!",
+                type:'success'
+            })
         }
     }
 }

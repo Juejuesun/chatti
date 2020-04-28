@@ -7,6 +7,7 @@ import ChatRoom from '../components/ChatRoom.vue'
 import Home from '../components/Home.vue'
 import ShareGroup from '../components/ShareGroup.vue'
 import EditGroup from '../components/EditGroup.vue'
+import SignIN from '../components/signin.vue'
 
 Vue.use(VueRouter)
 
@@ -23,6 +24,10 @@ const routes = [
       {
         path: '/home/enter',
         component: Enter
+      },
+      {
+        path: '/home/signin',
+        component: SignIN
       },
       {
         path: '/home/profilehome',
@@ -56,9 +61,9 @@ const router = new VueRouter({
 
 router.beforeEach((to,from,next) => {
   if(to.path === '/home/enter') return next()
-  if(to.path === '/home/profilehome') return next()
+  if(to.path === '/home/signin') return next()
   const usName = window.sessionStorage.getItem('USERNAME')
-  if(!usName) return next('/home/profilehome')
+  if(!usName) return next('/home/signin')
   next()
 })
 

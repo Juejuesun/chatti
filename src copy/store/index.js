@@ -31,6 +31,8 @@ export default new Vuex.Store({
     async getGroupInfo(state) {
       const {data: res} = await axios.get('v1/rooms',state.groupInfo.groupId);//正式使用
       // const {data: res} = await axios.get('roommsg.json'); //测试使用
+        // const res = response.data
+        // const rep = {}
         // console.log(res)
         if(res.code === 0) {
           state.groupInfo.groupName = res.data.name
@@ -47,7 +49,7 @@ export default new Vuex.Store({
         room: state.groupInfo.groupId,
         page: 1
       }
-      const {data: res} = await axios.post('v1/messages',getChatTextInfo);//正式时为res
+      const {data: res} = await axios.post('v1/messages',getChatTextInfo);
       console.log(res)
       if(res.code === 0) {
         state.chatText = res.data

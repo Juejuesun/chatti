@@ -25,7 +25,7 @@
             </div>
         </div>
         <div v-show="search">
-            <el-input placeholder="Search for message or users..." suffix-icon="el-icon-search" v-model="sec" @keyup.enter.native="searchTextNow"></el-input>
+            <el-input placeholder="Search this chat" suffix-icon="el-icon-search" v-model="sec" @keyup.enter.native="searchTextNow"></el-input>
             <el-drawer title="查找记录" :visible.sync="drawer" direction="btt" :with-header="false" :size="'60%'">
                 <h5>查找记录</h5>
                 <ul style="background-color: pink">

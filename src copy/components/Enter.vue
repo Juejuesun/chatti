@@ -71,23 +71,23 @@ export default {
             return isJPG && isLt2M;
         },
         creatGroup() {
-            let groupInfo = { //正式数据
+            let groupInfo = {
                 name: this.name,
                 topic: this.topic,
                 desc: this.discription,
                 sid: this.sessionId
             }
             // console.log("state中的"+this.sessionId)
-            let groupTestInfo = { //post模拟数据 测试数据
-                "code": 0,
-                "msg": "200",
-                "data": "http://localhost/chat/dC0MmYm9fSvLufUIf-0CAA"
-            }
+            // let groupTestInfo = { //post模拟数据
+            //     "code": 0,
+            //     "msg": "200",
+            //     "data": "http://localhost/chat/dC0MmYm9fSvLufUIf-0CAA"
+            // }
             var that = this;
-            // this.$http.post('http://localhost:3000/posts',groupInfo).then(function(response){ //测试接口
-            this.$http.post('v1/rooms',groupInfo).then(function(response){ //正式用
-                const res = response.data //正式用
-                // const res = groupTestInfo//测试时使用
+            // this.$http.post('http://localhost:3000/posts',groupInfo).then(function(response){ //调试接口
+            this.$http.post('v1/rooms',groupInfo).then(function(response){
+                // const res = response.data
+                const res = groupTestInfo//调试时使用
                 that.groupInfo.groupUrl = res.data
                 let roomStr = res.data.split('/')
                 // console.log(roomStr)
@@ -101,7 +101,7 @@ export default {
                         message:"创建成功!",
                         type:'success'
                     })
-                    that.$router.push('/home/profilehome')//测试时用 //是否要换成房间url？
+                    that.$router.push('/home/signin')//测试时用 //是否要换成房间url？
 
                 }else {
                     that.$message({
