@@ -30,14 +30,17 @@
                     <el-form-item label="Discription">
                         <el-input placeholder="Group Discription" v-model="discription"></el-input>
                     </el-form-item>
+                    <el-form-item>
+                         <el-row  type="flex" justify="center">
+                            <el-button type="primary" @click="creatGroup">Create group</el-button>
+                        </el-row>
+                    </el-form-item>
                 </el-form>        
             </el-col>
         </el-row>
-        <el-row  type="flex" justify="center">
-            <!-- <el-col :span="12"> -->
-                <el-button type="primary" @click="creatGroup">Create group</el-button>
-            <!-- </el-col> -->
-        </el-row>
+        <!-- <el-row  type="flex" justify="center">
+            <el-button type="primary" @click="creatGroup">Create group</el-button>
+        </el-row> -->
          
     </div>
 </template>
@@ -84,10 +87,10 @@ export default {
                 "data": "http://localhost/chat/dC0MmYm9fSvLufUIf-0CAA"
             }
             var that = this;
-            // this.$http.post('http://localhost:3000/posts',groupInfo).then(function(response){ //测试接口
-            this.$http.post('v1/rooms',groupInfo).then(function(response){ //正式用
-                const res = response.data //正式用
-                // const res = groupTestInfo//测试时使用
+            this.$http.post('http://localhost:3000/posts',groupInfo).then(function(response){ //测试接口
+            // this.$http.post('v1/rooms',groupInfo).then(function(response){ //正式用
+                // const res = response.data //正式用
+                const res = groupTestInfo//测试时使用
                 that.groupInfo.groupUrl = res.data
                 let roomStr = res.data.split('/')
                 // console.log(roomStr)
