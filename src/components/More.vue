@@ -21,8 +21,8 @@ export default {
     },
     methods: {
         async deleteRoom() {
-            const {data: res} = await this.$http.delete('http://localhost:3000/delh',this.sessionId) //测试接口
-            // const {data: res} = await this.$http.delete('v1/rooms',this.sessionId)//正式用
+            // const {data: res} = await this.$http.delete('http://localhost:3000/delh',this.sessionId) //测试接口
+            const {data: res} = await this.$http.delete('v1/rooms',this.sessionId)//正式用
             console.log(res)
             alert('删除成功！')
         }
