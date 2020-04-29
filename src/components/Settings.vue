@@ -23,7 +23,7 @@
                     </div>
                     
                     <el-form-item label="Avatar">
-                        <el-upload class="avatar-uploader" action="https://jsonplaceholder.typicode.com/posts/" :show-file-list="false" :on-success="handleAvatarSuccess" :before-upload="beforeAvatarUpload">
+                        <el-upload class="avatar-uploader" action="https://jsonplaceholder.typicode.com/posts/" :show-file-list="false" :on-success="handleAvatarSuccess" :before-upload="beforeAvatarUpload" :file-list="fileList">
                             <img v-if="imageUrl" :src="imageUrl" class="avatar">
                             <i v-else class="el-icon-plus avatar-uploader-icon"></i>
                         </el-upload>         
@@ -62,6 +62,8 @@ export default {
     data() {
         return {
             imageUrl: '',
+            fileList: [],
+            formData: new FormData(),
             loginForm:{
                 username: "",
                 uphone: '',
@@ -93,6 +95,8 @@ export default {
             if (!isLt2M) {
                 this.$message.error('上传头像图片大小不能超过 2MB!');
             }
+            this.formData.append("avatar",file) //
+            // console.log(this.formData.get("avatar"))
             return isJPG && isLt2M;
         },
         savePreference() {
@@ -106,25 +110,51 @@ export default {
                     }
                     // socket 事件
                     window.sessionStorage.setItem('USERNAME',this.loginForm.username)
-                    if(!this.groupInfo.groupId) {
+                    // if(!this.groupInfo.groupId) {
                         await this.getroomid()
-                    }
+                    // }
                     let sig = {
                         name: this.loginForm.username,
                         room: this.groupInfo.groupId
                     }
                     // console.log("sig=",sig)
-                    this.$router.push('/home/chatroom')//做一个守卫
-                    this.$store.dispatch('getUname')
-                    this.$socket.emit("join",sig);
+                    //推送图片
+                    this.formData.append("sid", this.sessionId)
+                    console.log('文件',this.formData.get("avatar"))
+                    let config = {
+                        headers: {
+                            'Content-Type': 'multipart/form-data'
+                        }
+                    };
+                    const {data: putres} = await this.$http.put('v1/users/avatar',this.formData, config)//正式使用
+                    this.$store.dispatch('getAvatar')
 
+                    if(!this.memberInfo.memberName){
+                        this.$router.push({
+                            path: '/home/chatroom',
+                            // name: 'chatroom',
+                            query:{id: this.groupInfo.groupId}
+                        })//做一个守卫
+                        //守卫
+                        this.$socket.emit("join",sig);
+                        this.$message({
+                            message:"设置成功,快去聊天吧!",
+                            type:'success'
+                        })
+                    }else {
+                        this.$message({
+                            message:"修改成功",
+                            type:'success'
+                        })
+                    }
+                    this.$store.dispatch('getUname')
                     this.$store.dispatch('savePreferences',memberInfo) //strot事件
-                    this.$refs.loginFormRef.resetFields();
-                    this.$message({
-                        message:"设置成功,快去聊天吧!",
-                        type:'success'
-                    })
-                } else {
+                    // this.$refs.loginFormRef.resetFields();
+                    
+                    this.loginForm.uemail=''
+                    this.loginForm.udiscription=''
+                    this.loginForm.uphone=''
+                }else {
                     console.log('error submit!!');
                     this.$message({
                         message:"请输入昵称!",
@@ -135,16 +165,14 @@ export default {
             });
         },
         getroomid() {
-            let path = this.$route.path
-                let pathStr = path.split('/')
-                const pathis = pathStr[pathStr.length-1].trim()
-                console.log(pathis)
-                //推送roomid
-                this.$store.dispatch('pushRoomId',pathis)
-                const groupUrl = ('http://localhost/chat/'+pathis).trim() //存疑
-                // console.log('前'+this.groupInfo.groupUrl)
-                this.groupInfo.groupUrl = groupUrl
-                // console.log('后'+this.groupInfo.groupUrl)
+            let roomid = (this.$route.query.id).trim()
+            let path = (this.$route.fullPath).trim()
+            console.log(roomid)
+            // console.log('fu录=',path)
+            //推送roomid
+            this.$store.dispatch('pushRoomId',roomid)
+            const groupUrl = path //存疑
+            this.groupInfo.groupUrl = 'http://localhost:8080/#'+groupUrl
         }
     }
 }
