@@ -99,10 +99,11 @@ export default {
                 "data": "http://localhost/chat/dC0MmYm9fSvLufUIf-0CAA"
             }
             var that = this;
-            // this.$http.post('http://localhost:3000/posts',groupInfo).then(async function(response){ //测试接口
-            this.$http.post('v1/rooms',formDate, config).then(async function(response){ //正式用
-                const res = response.data //正式用
-                // const res = groupTestInfo//测试时使用
+            this.$http.post('http://localhost:3000/posts',groupInfo).then(async function(response){ //测试接口
+            // this.$http.post('v1/rooms',formDate, config).then(async function(response){ //正式用
+                // const res = response.data //正式用
+                const res = groupTestInfo//测试时使用
+                // const res = JSON.parse(resj)
                 console.log(res)
                 that.groupInfo.groupUrl = res.data
                 let roomStr = res.data.split('/')
