@@ -172,7 +172,7 @@ export default {
             //推送roomid
             this.$store.dispatch('pushRoomId',roomid)
             const groupUrl = path //存疑
-            this.groupInfo.groupUrl = 'http://localhost:8080/#'+groupUrl
+            this.groupInfo.groupUrl = 'http://localhost/index/#'+groupUrl
         }
     }
 }

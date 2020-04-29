@@ -38,10 +38,9 @@ export default new Vuex.Store({
         room: state.groupInfo.groupId
       }
       // console.log("roomid=",roomid)
-      // const {data: res} = await axios.get('v1/rooms',{params:roomid});//正式使用
-      const {data: res} = await axios.get('roommsg.json'); //测试使用
+      const {data: res} = await axios.get('v1/rooms',{params:roomid});//正式使用
+      // const {data: res} = await axios.get('roommsg.json'); //测试使用
         // console.log(res)
-        // const res = JSON.parse(resj)
         if(res.code === 0) {
           state.groupInfo.groupName = res.data.name
           state.groupInfo.groupTopic = res.data.topic
@@ -53,13 +52,13 @@ export default new Vuex.Store({
         state.isShowState = false
     },
     async getChatText(state) {
-      const {data: res} = await axios.get('chatText.json');//测试使用
+      // const {data: res} = await axios.get('chatText.json');//测试使用
       let getChatTextInfo = {
         room: state.groupInfo.groupId,
         page: 1
       }
-      const {data: resTest} = await axios.post('v1/messages',getChatTextInfo);//测试时为
-      // const {data: res} = await axios.post('v1/messages',JSON.stringify(getChatTextInfo));//正式用
+      // const {data: resTest} = await axios.post('v1/messages',getChatTextInfo);//测试时为
+      const {data: res} = await axios.post('v1/messages',JSON.stringify(getChatTextInfo));//正式用
       console.log(res)
       if(res.code === 0) {
         state.chatText = res.data
@@ -113,7 +112,7 @@ export default new Vuex.Store({
           'Content-Type': 'multipart/form-data'
         }
       };
-      const {data: res} = await axios.get('v1/users/avatar', config)
+      const {data: res} = await axios.get('v1/users/avatar', config)//正式使用
       if(res.code) {
         state.memberInfo.memberAvatar = res.data
       }else {
