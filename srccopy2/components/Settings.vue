@@ -113,7 +113,6 @@ export default {
                         name: this.loginForm.username,
                         room: this.groupInfo.groupId
                     }
-                    // console.log("sig=",sig)
                     this.$router.push('/home/chatroom')//做一个守卫
                     this.$store.dispatch('getUname')
                     this.$socket.emit("join",sig);
