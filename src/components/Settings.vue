@@ -135,16 +135,14 @@ export default {
             });
         },
         getroomid() {
-            let path = this.$route.path
-                let pathStr = path.split('/')
-                const pathis = pathStr[pathStr.length-1].trim()
-                console.log(pathis)
-                //推送roomid
-                this.$store.dispatch('pushRoomId',pathis)
-                const groupUrl = ('http://localhost/chat/'+pathis).trim() //存疑
-                // console.log('前'+this.groupInfo.groupUrl)
-                this.groupInfo.groupUrl = groupUrl
-                // console.log('后'+this.groupInfo.groupUrl)
+            let roomid = (this.$route.query.id).trim()
+            let path = (this.$route.fullPath).trim()
+            console.log(roomid)
+            // console.log('fu录=',path)
+            //推送roomid
+            this.$store.dispatch('pushRoomId',roomid)
+            const groupUrl = path //存疑
+            this.groupInfo.groupUrl = 'http://localhost:8080/#'+groupUrl
         }
     }
 }

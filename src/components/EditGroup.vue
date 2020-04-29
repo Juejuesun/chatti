@@ -97,17 +97,21 @@ export default {
         async saveEditGro() {
             this.editInfo.sid = this.sessionId
             // console.log(this.editInfo)
-            // const {data: res} = await this.$http.put('http://localhost:3000/comments', this.editInfo)//t测试接口
-            let formData = new FormData()
-            Object.keys(editInfo).forEach((key) => {
-                formData.append(key, editInfo[key]);
-            })
+            const {data: res} = await this.$http.put('http://localhost:3000/comments', this.editInfo)//t测试接口
+            // let formData = new FormData()
+            // Object.keys(this.editInfo).forEach((key) => {
+            //     formData.append(key, this.editInfo[key]);
+            // })
+            this.formData.append('name', this.editInfo.gname)
+            this.formData.append('sid', this.editInfo.sid)
+            this.formData.append('topic', this.editInfo.gtopic)
+            this.formData.append('desc', this.editInfo.gdec)
             let config = {
                 headers: {
                     'Content-Type': 'multipart/form-data'
                 }
             };
-            const {data: res} = await this.$http.put('v1/rooms', formData, config) //房间设置 正式时用
+            // const {data: res} = await this.$http.put('v1/rooms', formData, config) //房间设置 正式时用
             console.log(res)
             this.$store.dispatch('getGroupInfo')
         }
