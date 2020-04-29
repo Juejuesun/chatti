@@ -26,15 +26,11 @@ const routes = [
       },
       {
         path: '/home/profilehome',
-        name: 'profilehome',
-        component: ProfileHome,
-        // meta: { requireAuth: true }
+        component: ProfileHome
       },
       {
         path: '/home/chatroom',
-        name: 'chatroom',
         component: ChatRoom,
-        // meta: { requireAuth: true },
         children: [
           {
             path: '/home/chatroom/share',

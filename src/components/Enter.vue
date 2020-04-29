@@ -56,7 +56,6 @@ export default {
             topic: '',
             discription: '',
             // fileList: []
-            formDate: new FormData()
         };
     },
     methods: {
@@ -73,21 +72,20 @@ export default {
             if (!isLt2M) {
                 this.$message.error('上传头像图片大小不能超过 2MB!');
             }
-            this.formDate.append("avatar", file)
             return isJPG && isLt2M;
         },
         creatGroup() {
-            // const formDate = new FormData()
-            let groupInfo = { //测试数据
-                name: this.name,
-                topic: this.topic,
-                desc: this.discription,
-                sid: this.sessionId
-            }
-            this.formDate.append('name', this.name)
-            this.formDate.append('topic', this.topic)
-            this.formDate.append('desc', this.discription)
-            this.formDate.append('sid', this.sessionId)
+            const formDate = new FormData()
+            // let groupInfo = { //测试数据
+            //     name: this.name,
+            //     topic: this.topic,
+            //     desc: this.discription,
+            //     sid: this.sessionId
+            // }
+            formDate.append('name', this.name)
+            formDate.append('topic', this.topic)
+            formDate.append('desc', this.discription)
+            formDate.append('sid', this.sessionId)
             // formDate.append('avatar', this.fileList.file[0])
             let config = {
                     headers: {
@@ -98,7 +96,7 @@ export default {
             let groupTestInfo = { //post模拟数据 测试数据
                 "code": 0,
                 "msg": "200",
-                "data": "dC0MmYm9fSvLufUIf-0CAA"
+                "data": "http://localhost/chat/dC0MmYm9fSvLufUIf-0CAA"
             }
             var that = this;
             // this.$http.post('http://localhost:3000/posts',groupInfo).then(async function(response){ //测试接口
@@ -106,19 +104,20 @@ export default {
                 const res = response.data //正式用
                 // const res = groupTestInfo//测试时使用
                 console.log(res)
+                that.groupInfo.groupUrl = res.data
+                let roomStr = res.data.split('/')
+                // console.log(roomStr)
+                // console.log(roomStr[roomStr.length-1].trim())
+                const room = roomStr[roomStr.length-1].trim()
                 //推送roomid
-                await that.$store.dispatch('pushRoomId',res.data)
+                await that.$store.dispatch('pushRoomId',room)
                 if(res.code == 0) {
                     that.$store.dispatch('getGroupInfo')
                     that.$message({
                         message:"创建成功!",
                         type:'success'
                     })
-                    that.$router.push({
-                        path: '/home/profilehome',
-                        // name: 'profilehome',
-                        query:{id: res.data}
-       　　         })//测试时用 //是否要换成房间url？
+                    that.$router.push('/home/profilehome')//测试时用 //是否要换成房间url？
 
                 }else {
                     that.$message({

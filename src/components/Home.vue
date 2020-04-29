@@ -14,7 +14,7 @@
                 </router-link>
             </div> -->
             <el-menu :default-active="defaultActive" class="el-menu-vertical-demo">
-                <el-avatar :size="50" :src="imgUrl" fit="fit">
+                <el-avatar :size="50" src="https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg" fit="fit">
                 <!-- <el-image src="https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg" fit="cover"></el-image> -->
                 </el-avatar>
                 <el-menu-item index="enter" v-show="isShowState">
@@ -23,12 +23,12 @@
                     </router-link>
                 </el-menu-item>
                 <el-menu-item index="chatroom" v-show="!isShowState">
-                    <router-link :to="`/home/chatroom?id=${groupInfo.groupId}`">
+                    <router-link to="/home/chatroom">
                         <i class="el-icon-chat-square"></i>
                     </router-link>
                 </el-menu-item>
                 <el-menu-item index="profilehome" v-show="!isShowState">
-                     <router-link :to="`/home/profilehome?id=${groupInfo.groupId}`">
+                     <router-link to="/home/profilehome">
                         <i class="el-icon-user"></i>
                     </router-link>
                 </el-menu-item>
@@ -49,24 +49,17 @@ import {mapState, mapActions} from 'vuex'
 export default {
     data() {
         return {
-            imgUrl: ''
+            
         }
     },
     computed: {
-        ...mapState(['defaultActive','isShowState','groupInfo'])
+        ...mapState(['defaultActive','isShowState'])
     },
     methods: {
-        ...mapState(['getGroupInfo']),
-        getImeUrl() {
-            this.imgUrl = this.groupInfo.groupAvatar
-        }
+        ...mapState(['getGroupInfo'])
     },
     mounted() {
-        this.getGroupInfo(),
-        this.getImeUrl()
-    },
-    updated() {
-        this.getImeUrl()
+        this.getGroupInfo()
     }
 }
 </script>
