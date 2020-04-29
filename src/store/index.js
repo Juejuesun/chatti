@@ -11,18 +11,20 @@ export default new Vuex.Store({
       groupTopic: 'HTML, CSS and Javascript help',
       groupDiscription: 'Bootstrap is an open source toolkit for developing web with HTML, CSS and JS.',
       groupUrl: 'Quick setup and build tools.',
-      groupId: ''
+      groupId: '',
+      groupAvatar: 'https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg'
     },
     groupMembers: 1,
     sessionId: '',
     defaultActive: 'enter',
     isShowState: true,
     memberInfo: {
-      memberName: 'Danny',
+      memberName: '',
       memberDes: 'No Description',
       memberCountry: 'Warsaw, Poland',
       memberPhone: '+39 02 87 21 43 19',
       memberEmail: 'anna@gmail.com',
+      memberAvatar: 'https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg'
     },
     chatText: [],
     searchChatText: []
@@ -44,6 +46,7 @@ export default new Vuex.Store({
           state.groupInfo.groupName = res.data.name
           state.groupInfo.groupTopic = res.data.topic
           state.groupInfo.groupDiscription = res.data.desc
+          state.groupInfo.groupAvatar = res.data.avatar
         }
         console.log('getGroupInfo!') //调试用
         state.defaultActive = 'chatroom'
@@ -84,6 +87,7 @@ export default new Vuex.Store({
       }
       if(data.uphone) {
         state.memberInfo.memberPhone = data.uphone
+        console.log("dasj",data.uphone)
       }
       if(data.uemail) {
         state.memberInfo.memberEmail = data.uemail
@@ -99,6 +103,22 @@ export default new Vuex.Store({
     },
     getUname(state) {
       state.memberInfo.memberName = window.sessionStorage.getItem('USERNAME')
+    },
+    async getAvatar(state) {
+      let formData = new FormData()
+      formData.append("sid",state.sessionId)
+      let config = {
+        params: formData,
+        headers: {
+          'Content-Type': 'multipart/form-data'
+        }
+      };
+      const {data: res} = await axios.get('v1/users/avatar', config)
+      if(res.code) {
+        state.memberInfo.memberAvatar = res.data
+      }else {
+        console.log("获取失败！")
+      }
     }
   },
   actions: {
@@ -120,6 +140,9 @@ export default new Vuex.Store({
     },
     pushRoomId({commit},room) {
       commit('pushRoomId',{room})
+    },
+    getAvatar({commit}) {
+      commit('getAvatar')
     }
   },
   modules: {

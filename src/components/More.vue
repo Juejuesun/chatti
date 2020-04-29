@@ -26,6 +26,7 @@ export default {
                 sid: this.sessionId
             }
             // const {data: res} = await this.$http.delete('v1/rooms',{params: ssid})//正式用
+            // const res = JSON.parse(resj)
             console.log(res)
             alert('删除成功！')
         }

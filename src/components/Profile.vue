@@ -14,7 +14,7 @@
                 <el-card class="box-card">
                     <div class="cont1">
                         <div>
-                            <el-avatar :size="80" src="https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg" fit="fit">
+                            <el-avatar :size="80" :src="imgUrl" fit="fit">
                                 <!-- <el-image src="https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg" fit="cover"></el-image> -->
                             </el-avatar>
                             
@@ -83,7 +83,21 @@ export default {
     data() {
         return {
         //    groupInfo: {}
+            // imgUrl: 'https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg'
+            imgUrl: ''
+
         }
+    },
+    methods: {
+        getImeUrl() {
+            this.imgUrl = this.memberInfo.memberAvatar
+        }
+    },
+    mounted() {
+        this.getImeUrl()
+    },
+    updated() {
+        this.getImeUrl()
     },
     computed: {
         ...mapState(['memberInfo'])

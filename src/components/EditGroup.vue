@@ -68,7 +68,8 @@ export default {
                 gtopic: '',
                 gdec: '',
                 sid: ''
-            }  
+            },
+            formData: new FormData()
         };
     },
     computed: {
@@ -88,6 +89,7 @@ export default {
             if (!isLt2M) {
                 this.$message.error('上传头像图片大小不能超过 2MB!');
             }
+            this.formData.append("avatar", file)
             return isJPG && isLt2M;
         },
         back() {
@@ -113,7 +115,12 @@ export default {
             };
             // const {data: res} = await this.$http.put('v1/rooms', formData, config) //房间设置 正式时用
             console.log(res)
+            //判断语句
             this.$store.dispatch('getGroupInfo')
+            this.$message({
+                message: "修改成功！",
+                type:'success'
+            })
         }
     }
 }

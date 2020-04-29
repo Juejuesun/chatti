@@ -65,7 +65,7 @@ export default {
         return {
             isShow: false,
             // chatTexts: this.chatText
-            msg: '',
+            msg: ''
         }
     },
     watch: {
@@ -103,8 +103,16 @@ export default {
             })
         }
     },
+    beforeCreate(){
+        const urls = this.$route.path
+        console.log(urls)
+    },
     created() {
-        this.$socket.emit("online_cnt", this.groupInfo.groupId)
+        const roomid = {
+            room: this.groupInfo.groupId
+        }
+        this.$socket.emit("online_cnt", roomid)
+        
     },
     computed: {
         ...mapState(['chatText','memberInfo','groupInfo'])
