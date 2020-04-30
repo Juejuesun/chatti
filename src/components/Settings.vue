@@ -23,7 +23,7 @@
                     </div>
                     
                     <el-form-item label="Avatar">
-                        <el-upload class="avatar-uploader" action="https://jsonplaceholder.typicode.com/posts/" :show-file-list="false" :on-success="handleAvatarSuccess" :before-upload="beforeAvatarUpload" :file-list="fileList">
+                        <el-upload class="avatar-uploader" action="https://jsonplaceholder.typicode.com/posts/" :show-file-list="false" :on-success="handleAvatarSuccess" :before-upload="beforeAvatarUpload">
                             <img v-if="imageUrl" :src="imageUrl" class="avatar">
                             <i v-else class="el-icon-plus avatar-uploader-icon"></i>
                         </el-upload>         
@@ -62,7 +62,7 @@ export default {
     data() {
         return {
             imageUrl: '',
-            fileList: [],
+            // fileList: [{name: ""}],
             formData: new FormData(),
             loginForm:{
                 username: "",
@@ -86,18 +86,26 @@ export default {
             this.imageUrl = URL.createObjectURL(file.raw);
         },
         beforeAvatarUpload(file) {
-            const isJPG = file.type === 'image/jpeg';
+            const isJPG = file.type 
             const isLt2M = file.size / 1024 / 1024 < 2;
 
-            if (!isJPG) {
-                this.$message.error('上传头像图片只能是 JPG 格式!');
+            if ((isJPG != 'image/jpeg') && (isJPG != 'image/png')) {
+                this.$message.error('上传头像图片只能是 JPG 或 PNG 格式!');
             }
             if (!isLt2M) {
                 this.$message.error('上传头像图片大小不能超过 2MB!');
             }
-            this.formData.append("avatar",file) //
+            // let filid= file.uid
+            // let filidod = fileid 
+            // if(filid = filidod){
+                this.formData.append("avatar",file) //
+            // }else{
+
+            // }
+            
             // console.log(this.formData.get("avatar"))
-            return isJPG && isLt2M;
+            // console.log(filename)
+            return isJPG && isLt2M ;
         },
         savePreference() {
             this.$refs.loginFormRef.validate(async (valid) => {
@@ -120,13 +128,18 @@ export default {
                     // console.log("sig=",sig)
                     //推送图片
                     this.formData.append("sid", this.sessionId)
+                    if(this.formData.has("avatar")){
+                        const {data: putres} = await this.$http.put('v1/users/avatar',this.formData, config)//正式使用
+                    }else{
+                        this.formData.delete("avatar")
+                    }
                     console.log('文件',this.formData.get("avatar"))
                     let config = {
                         headers: {
                             'Content-Type': 'multipart/form-data'
                         }
                     };
-                    // const {data: putres} = await this.$http.put('v1/users/avatar',this.formData, config)//正式使用
+                    
                     this.$store.dispatch('getAvatar')
 
                     if(!this.memberInfo.memberName){
@@ -172,8 +185,8 @@ export default {
             //推送roomid
             this.$store.dispatch('pushRoomId',roomid)
             const groupUrl = path //存疑
-            this.groupInfo.groupUrl = 'http://localhost:8080/#'+groupUrl//测试使用
-            // this.groupInfo.groupUrl = 'http://localhost/index/#'+groupUrl
+            // this.groupInfo.groupUrl = 'http://localhost:8080/#'+groupUrl//测试使用
+            this.groupInfo.groupUrl = 'http://localhost/#'+groupUrl//正式使用
 
         }
     }

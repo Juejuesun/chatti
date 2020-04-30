@@ -1,14 +1,23 @@
 {
     "code": 0,
     "msg": "",
-    "data": [
-        {
-            "uname": "poi",
-            "msg": "waserena"
-        },
-        {
-            "uname": "213",
-            "msg": "大范围"
-        }
-    ]
+    "data":{
+        "left": 8,
+        "list": [
+            {
+                "uname": "poi",
+                "msg": "waserena",
+                "date": "21:52:11",
+                "msgType": "msgres",
+                "cid": "aa231"
+            },
+            {
+                "uname": "213",
+                "msg": "大范围",
+                "date": "12:52:11",
+                "msgType": "msgres",
+                "cid": "aa231"
+            }
+        ]
+    } 
 }

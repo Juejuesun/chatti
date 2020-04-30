@@ -23,7 +23,7 @@ export default {
         room: this.groupInfo.groupId
       }
       this.$socket.emit('leave',data)
-      this.$socket.emit('online_cnt',data)
+      // this.$socket.emit('online_cnt',data)
 
     }
   },

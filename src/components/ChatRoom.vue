@@ -20,7 +20,7 @@
                             <div class="respond">{{chat.uname}}</div>
                         </div>
                         <div v-else-if="chat.msgType == 'msgres'" class="msgresMsg">
-                            <div v-if="chat.uname==memberInfo.memberName" class="self">
+                            <div v-if="chat.uname==memberInfo.memberName&&chat.cid===sessionId.slice(0,6)" class="self">
                                 <el-card class="box-card" shadow="hover" style="background-color: #409EFF; color: #FFFFFF">
                                     <div>{{chat.msg}}</div>
                                     <div class="msgdate">{{chat.date}}</div>
@@ -49,6 +49,8 @@
                         </el-popover>
                     </div>
                     <el-button class="thisBtn" type="primary" icon="el-icon-s-promotion" circle @click="send"></el-button>
+                    <!-- <el-button type="primary" @click="getChatText">获取聊天记录</el-button> -->
+                    <el-tag type="info" @click="getChatText">聊天记录</el-tag>
                 </div>
             </el-footer>
         </el-container>
@@ -73,7 +75,7 @@ export default {
         return {
             isShow: false,
             // chatTexts: this.chatText
-            msg: '',
+            msg: ''
         }
     },
     watch: {
@@ -90,7 +92,7 @@ export default {
     methods: {
         // ...mapState(['getGroupInfo']),
         selectEmoji(emoji) {
-            // console.log(emoji)
+            console.log(emoji)//调试
             this.msg += emoji.data
         },
         getChatText() {
@@ -102,7 +104,8 @@ export default {
                 msg: this.msg,
                 name: this.memberInfo.memberName,
                 room: this.groupInfo.groupId,
-                date: moment().format("HH:mm:ss")
+                date: moment().format("HH:mm:ss"),
+                cid: this.sessionId.slice(0,6)
             }
             // console.log(transdata)
             this.$socket.emit("chat",transdata);
@@ -114,11 +117,19 @@ export default {
             div.scrollTop = div.scrollHeight;
             })
         },
-        // beforeunloadFn(e) {
-        //     console.log('刷新或关闭')
-        //     alert("lijao")
-        // // ...
-        // }
+        // handleScroll() {
+        //     let scrollTop = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop
+        //     if (document.documentElement.scrollTop == 0) {
+        //         this.getChatText();
+
+        //     }
+        //     // this.$nextTick(function(){
+        //     // var div = document.getElementById('dialogue_box');
+        //     //     if(div.scrollTop == div.scrollHeight){
+        //     //         this.getChatText();//
+        //     //     }
+        //     // })
+        // },
     },
     beforeCreate(){
         const urls = this.$route.path
@@ -132,12 +143,14 @@ export default {
         // window.addEventListener('beforeunload', e => this.beforeunloadFn(e))
     },
     computed: {
-        ...mapState(['chatText','memberInfo','groupInfo'])
+        ...mapState(['chatText','memberInfo','groupInfo','sessionId'])
     },
     mounted() {
-        // this.getChatText();//正式使用
-        // this.$socket.emit('login','haha');
-        
+        // this.getChatText();//使用
+        // window.addEventListener('scroll', this.handleScroll, true);
+    },
+    destroyed() {
+        // window.removeEventListener('scroll', this.handleScroll); //离开页面需要移除这个监听的事件
     },
     sockets:{ //在此接收又服务器发送过来的数据 ps：注意此处的方法名要与服务器的发送的事件保持一致才能接收到
         connect() {      //与ws:127.0.0.1:8000连接后回调
@@ -153,7 +166,8 @@ export default {
                 uname: data.name,
                 msg: data.msg,
                 date: moment().format("HH:mm:ss"),
-                msgType: 'msgres'
+                msgType: 'msgres',
+                cid: this.sessionId.slice(0,6)
             }
             this.chatText.push(chatmsg)//调试时使用
         },

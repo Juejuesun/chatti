@@ -56,7 +56,7 @@ export default {
             topic: '',
             discription: '',
             // fileList: []
-            formDate: new FormData()
+            formData: new FormData()
         };
     },
     methods: {
@@ -64,31 +64,34 @@ export default {
             this.imageUrl = URL.createObjectURL(file.raw);
         },
         beforeAvatarUpload(file) {
-            const isJPG = file.type === 'image/jpeg';
+            const isJPG = file.type 
             const isLt2M = file.size / 1024 / 1024 < 2;
 
-            if (!isJPG) {
-                this.$message.error('上传头像图片只能是 JPG 格式!');
+            if ((isJPG != 'image/jpeg') && (isJPG != 'image/png')) {
+                this.$message.error('上传头像图片只能是 JPG 或 PNG 格式!');
             }
             if (!isLt2M) {
                 this.$message.error('上传头像图片大小不能超过 2MB!');
             }
-            this.formDate.append("avatar", file)
-            return isJPG && isLt2M;
+            // this.formData.append("avatar",file)
+            this.formData.append("avatar",file);
+            console.log(file)
+            return isJPG && isLt2M ;
         },
         creatGroup() {
-            // const formDate = new FormData()
             let groupInfo = { //测试数据
                 name: this.name,
                 topic: this.topic,
                 desc: this.discription,
                 sid: this.sessionId
             }
-            this.formDate.append('name', this.name)
-            this.formDate.append('topic', this.topic)
-            this.formDate.append('desc', this.discription)
-            this.formDate.append('sid', this.sessionId)
-            // formDate.append('avatar', this.fileList.file[0])
+            this.formData.append('name', this.name)
+            this.formData.append('topic', this.topic)
+            this.formData.append('desc', this.discription)
+            this.formData.append('sid', this.sessionId)
+            if(!this.formData.has("avatar")){
+                this.formData.delete("avatar")
+            }
             let config = {
                     headers: {
                         'Content-Type': 'multipart/form-data'
@@ -100,12 +103,13 @@ export default {
                 "msg": "200",
                 "data": "dC0MmYm9fSvLufUIf-0CAA"
             }
+            
             var that = this;
-            this.$http.post('http://localhost:3000/posts',groupInfo).then(async function(response){ //测试接口
-            // this.$http.post('v1/rooms',this.formDate, config).then(async function(response){ //正式用
-                // const res = response.data //正式用
-                const res = groupTestInfo//测试时使用
-                // const res = JSON.parse(resj)
+           
+            // this.$http.post('http://localhost:3000/posts',groupInfo).then(async function(response){ //测试接口
+            this.$http.post('v1/rooms', this.formData, config).then(async function(response){ //正式用
+                const res = response.data //正式用
+                // const res = groupTestInfo//测试时使用
                 console.log(res)
                 //推送roomid
                 await that.$store.dispatch('pushRoomId',res.data)
@@ -128,12 +132,13 @@ export default {
                     })
                 }
             
-            }).catch(function(error){
-                    that.$message({
-                        message: "链接失败！",
-                        type: 'error'
-                    })
             })
+            // .catch(function(error){
+            //         that.$message({
+            //             message: "链接失败！",
+            //             type: 'error'
+            //         })
+            // })
         }
     },
     computed: {

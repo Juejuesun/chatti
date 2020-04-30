@@ -56,7 +56,7 @@ export default {
         ...mapState(['defaultActive','isShowState','groupInfo','memberInfo'])
     },
     methods: {
-        ...mapState(['getGroupInfo']),
+        ...mapActions(['getGroupInfo']),
         getImeUrl() {
             this.imgUrl = this.groupInfo.groupAvatar
         }

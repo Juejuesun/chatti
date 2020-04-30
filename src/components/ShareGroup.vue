@@ -5,7 +5,7 @@
         </div>
         <div class="cont">
             <div>
-                <el-avatar size="large" src="https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg" fit="fit">
+                <el-avatar size="large" :src="imgUrl" fit="fit">
                     <!-- <el-image src="https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg" fit="cover"></el-image> -->
                 </el-avatar>
             </div>
@@ -43,7 +43,8 @@ export default {
     data() {
         return {
             introduction: 'introduction',
-            showLink: false
+            showLink: false,
+            imgUrl: ''
         }
     },
     computed: {
@@ -67,8 +68,17 @@ export default {
                 message:"复制成功!",
                 type:'success'
             })
+        },
+        getImeUrl() {
+            this.imgUrl = this.groupInfo.groupAvatar
         }
-    }
+    },
+    mounted() {
+        this.getImeUrl()
+    },
+    updated() {
+        this.getImeUrl()
+    },
 }
 </script>
 

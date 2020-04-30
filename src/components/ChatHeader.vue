@@ -3,7 +3,7 @@
         <div class="contbox">
             <div class="cont">
                 <div>
-                    <el-avatar size="large" src="https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg" fit="fit">
+                    <el-avatar size="large" :src="imgUrl" fit="fit">
                         <!-- <el-image src="https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg" fit="cover"></el-image> -->
                     </el-avatar>
                 </div>
@@ -52,6 +52,7 @@ export default {
             search: false,
             sec: '',
             drawer: false,
+            imgUrl: 'https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg'
         }
     },
     computed: {
@@ -63,7 +64,16 @@ export default {
             console.log(this.sec)
             this.$store.dispatch('showSearch',this.sec)
             this.drawer = true
+        },
+        getImeUrl() {
+            this.imgUrl = this.groupInfo.groupAvatar
         }
+    },
+    mounted() {
+        this.getImeUrl()
+    },
+    updated() {
+        this.getImeUrl()
     },
     sockets:{ //在此接收又服务器发送过来的数据 ps：注意此处的方法名要与服务器的发送的事件保持一致才能接收到
         clientNum(Num){
@@ -96,9 +106,9 @@ export default {
 .msg{
     margin-left: 15px;
 }
-.el-popover{
-    background-color: rgba(255, 255, 255, 0) !important;
-    box-shadow: 0 0 rgba(255, 255, 255, 0) !important;
+el-popover{
+    background-color: rgba(255, 255, 255) !important;
+    box-shadow: 0 0 rgba(255, 255, 255) !important;
 }
 h5{
     margin: 10px !important;

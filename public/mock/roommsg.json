@@ -4,7 +4,7 @@
     "data": {
         "topic": "话题",
         "desc": "简介",
-        "avatar": "/static/img/room_dC0MmYm9fSvLufUIf-0CAA.png",
+        "avatar": "https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg",
         "name": "房间名称",
         "roomUrl": "http://localhost:8080/#/home/chatroom"
 
