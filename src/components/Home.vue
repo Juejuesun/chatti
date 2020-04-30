@@ -53,7 +53,7 @@ export default {
         }
     },
     computed: {
-        ...mapState(['defaultActive','isShowState','groupInfo'])
+        ...mapState(['defaultActive','isShowState','groupInfo','memberInfo'])
     },
     methods: {
         ...mapState(['getGroupInfo']),

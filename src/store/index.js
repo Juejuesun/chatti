@@ -105,15 +105,10 @@ export default new Vuex.Store({
       state.memberInfo.memberName = window.sessionStorage.getItem('USERNAME')
     },
     async getAvatar(state) {
-      let formData = new FormData()
-      formData.append("sid",state.sessionId)
-      let config = {
-        params: formData,
-        headers: {
-          'Content-Type': 'multipart/form-data'
-        }
-      };
-      const {data: res} = await axios.get('v1/users/avatar', config)
+      let sidd = {
+        'sid': state.sessionId
+      }
+      const {data: res} = await axios.get('v1/users/avatar', {params: sidd})
       if(res.code) {
         state.memberInfo.memberAvatar = res.data
       }else {

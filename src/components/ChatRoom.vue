@@ -39,8 +39,15 @@
                 </div>
             </el-main>
             <el-footer>
+                <!-- <chatFooter/> -->
                 <div class="cont">
-                    <el-input placeholder="Send your message..." suffix-icon="fa fa-smile-o" v-model="msg" @keyup.enter.native="send"></el-input>
+                    <el-input placeholder="Send your message..." style="width: 80%;"  v-model="msg" @keyup.enter.native="send"></el-input>
+                    <div class="emojiwin">
+                        <el-popover placement="top" trigger="click" visible-arrow="true" >
+                            <VEmojiPicker @select="selectEmoji" />
+                            <i slot="reference" class="fa fa-smile-o "></i>
+                        </el-popover>
+                    </div>
                     <el-button class="thisBtn" type="primary" icon="el-icon-s-promotion" circle @click="send"></el-button>
                 </div>
             </el-footer>
@@ -54,18 +61,19 @@
 <script>
 import {mapState, mapActions} from 'vuex'
 import ChatHeader from './ChatHeader'
+import VEmojiPicker from 'v-emoji-picker';
 
 const moment = require("moment")
 export default {
     components: {
         ChatHeader,
-        // chatBubble
+        VEmojiPicker
     },
     data() {
         return {
             isShow: false,
             // chatTexts: this.chatText
-            msg: ''
+            msg: '',
         }
     },
     watch: {
@@ -81,9 +89,13 @@ export default {
     },
     methods: {
         // ...mapState(['getGroupInfo']),
+        selectEmoji(emoji) {
+            // console.log(emoji)
+            this.msg += emoji.data
+        },
         getChatText() {
             this.$store.dispatch('getChatText')
-            console.log(this.chatText)
+            console.log(this.chatText.length)
         },
         send() {
             let transdata = {
@@ -101,7 +113,12 @@ export default {
             var div = document.getElementById('dialogue_box');
             div.scrollTop = div.scrollHeight;
             })
-        }
+        },
+        // beforeunloadFn(e) {
+        //     console.log('刷新或关闭')
+        //     alert("lijao")
+        // // ...
+        // }
     },
     beforeCreate(){
         const urls = this.$route.path
@@ -112,16 +129,16 @@ export default {
             room: this.groupInfo.groupId
         }
         this.$socket.emit("online_cnt", roomid)
-        
+        // window.addEventListener('beforeunload', e => this.beforeunloadFn(e))
     },
     computed: {
         ...mapState(['chatText','memberInfo','groupInfo'])
     },
-    // mounted() {
-    //     // this.getChatText();
-    //     // this.$socket.emit('login','haha');
+    mounted() {
+        // this.getChatText();//正式使用
+        // this.$socket.emit('login','haha');
         
-    // },
+    },
     sockets:{ //在此接收又服务器发送过来的数据 ps：注意此处的方法名要与服务器的发送的事件保持一致才能接收到
         connect() {      //与ws:127.0.0.1:8000连接后回调
             console.log('连接成功');
@@ -133,7 +150,7 @@ export default {
         chat(data) {
             console.log(data)
             let chatmsg = {
-                uname: data.uname,
+                uname: data.name,
                 msg: data.msg,
                 date: moment().format("HH:mm:ss"),
                 msgType: 'msgres'
@@ -170,7 +187,9 @@ export default {
     margin-top: 15px;
 }
 .thisBtn{
+    margin: 5px;
     margin-left: 10px;
+    margin-top: 0;
 }
 .respondMsg {
     display: flex;
@@ -213,5 +232,11 @@ export default {
 }
 .msgName {
     align-self: center;
+}
+.emojiwin {
+    margin: 5px;
+    margin-right: 0;
+    font-size: 23px;
+    color: #909399;
 }
 </style>

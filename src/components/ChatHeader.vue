@@ -3,7 +3,7 @@
         <div class="contbox">
             <div class="cont">
                 <div>
-                    <el-avatar @click="searchTextNow" size="large" src="https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg" fit="fit">
+                    <el-avatar size="large" src="https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg" fit="fit">
                         <!-- <el-image src="https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg" fit="cover"></el-image> -->
                     </el-avatar>
                 </div>
@@ -42,9 +42,10 @@
 <script>
 import {mapState} from 'vuex'
 import More from './More'
+
 export default {
     components: {
-        More
+        More,
     },
     data() {
         return {

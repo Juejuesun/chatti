@@ -102,7 +102,7 @@ export default {
             }
             var that = this;
             this.$http.post('http://localhost:3000/posts',groupInfo).then(async function(response){ //测试接口
-            // this.$http.post('v1/rooms',formDate, config).then(async function(response){ //正式用
+            // this.$http.post('v1/rooms',this.formDate, config).then(async function(response){ //正式用
                 // const res = response.data //正式用
                 const res = groupTestInfo//测试时使用
                 // const res = JSON.parse(resj)
@@ -138,7 +138,6 @@ export default {
     },
     computed: {
         ...mapState(['sessionId','groupInfo'])
-
     }
 }
 </script>

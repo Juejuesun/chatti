@@ -126,7 +126,7 @@ export default {
                             'Content-Type': 'multipart/form-data'
                         }
                     };
-                    const {data: putres} = await this.$http.put('v1/users/avatar',this.formData, config)//正式使用
+                    // const {data: putres} = await this.$http.put('v1/users/avatar',this.formData, config)//正式使用
                     this.$store.dispatch('getAvatar')
 
                     if(!this.memberInfo.memberName){
@@ -172,7 +172,9 @@ export default {
             //推送roomid
             this.$store.dispatch('pushRoomId',roomid)
             const groupUrl = path //存疑
-            this.groupInfo.groupUrl = 'http://localhost:8080/#'+groupUrl
+            this.groupInfo.groupUrl = 'http://localhost:8080/#'+groupUrl//测试使用
+            // this.groupInfo.groupUrl = 'http://localhost/index/#'+groupUrl
+
         }
     }
 }
