@@ -34,3 +34,5 @@ See [Configuration Reference](https://cli.vuejs.org/config/).
 完全匿名
 ###
 可发送表情
+### 接口文档
+  *[`文档链接`](https://www.showdoc.cc/771889282903906?page_id=4283096614900797)
