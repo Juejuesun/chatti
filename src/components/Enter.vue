@@ -109,15 +109,18 @@ export default {
             
             var that = this;
            
-            // this.$http.post('http://localhost:3000/posts',groupInfo).then(async function(response){ //测试接口
-            this.$http.post('v1/rooms', this.formData, config).then(async function(response){ //正式用
-                const res = response.data //正式用
-                // const res = groupTestInfo//测试时使用
+            this.$http.post('http://localhost:3000/posts',groupInfo).then(async function(response){ //测试接口
+            // this.$http.post('v1/rooms', this.formData, config).then(async function(response){ //正式用
+                // const res = response.data //正式用
+                const res = groupTestInfo//测试时使用
                 console.log(res)
                 //推送roomid
                 await that.$store.dispatch('pushRoomId',res.data)
                 if(res.code == 0) {
                     that.$store.dispatch('getGroupInfo')
+                    
+                    window.sessionStorage.setItem('ROOMROOT', true)
+                    window.sessionStorage.setItem('FIRSTCRT','true')
                     that.$message({
                         message:"创建成功!",
                         type:'success'

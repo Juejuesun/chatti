@@ -91,6 +91,18 @@ export default {
     },
     methods: {
         // ...mapState(['getGroupInfo']),
+        openmsg() {
+            const root = window.sessionStorage.getItem('ROOMROOT')
+            if(root && (window.sessionStorage.getItem('FIRSTCRT')=='true')) {
+                    this.$notify({
+                        title: '房间创建成功！',
+                        message: `分享房间链接,即可邀请朋友进入哦!${this.groupInfo.groupUrl}`,
+                        type: 'success'
+                    });
+                    window.sessionStorage.setItem('FIRSTCRT', 'false')
+            }
+            
+        },
         selectEmoji(emoji) {
             console.log(emoji)//调试
             this.msg += emoji.data
@@ -141,6 +153,7 @@ export default {
         }
         this.$socket.emit("online_cnt", roomid)
         // window.addEventListener('beforeunload', e => this.beforeunloadFn(e))
+        this.openmsg()
     },
     computed: {
         ...mapState(['chatText','memberInfo','groupInfo','sessionId'])

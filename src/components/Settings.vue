@@ -124,7 +124,7 @@ export default {
                     //推送图片
                     this.formData.append("sid", this.sessionId)
                     if(this.formData.has("avatar")){
-                        const {data: putres} = await this.$http.put('v1/users/avatar',this.formData, config)//正式使用
+                        // const {data: putres} = await this.$http.put('v1/users/avatar',this.formData, config)//正式使用
                     }else{
                         this.formData.delete("avatar")
                     }
@@ -180,8 +180,8 @@ export default {
             //推送roomid
             this.$store.dispatch('pushRoomId',roomid)
             const groupUrl = path //存疑
-            // this.groupInfo.groupUrl = 'http://localhost:8080/#'+groupUrl//测试使用
-            this.groupInfo.groupUrl = 'http://localhost/#'+groupUrl//正式使用
+            this.groupInfo.groupUrl = 'http://localhost:8080/#'+groupUrl//测试使用
+            // this.groupInfo.groupUrl = 'http://localhost/#'+groupUrl//正式使用
 
         }
     }
