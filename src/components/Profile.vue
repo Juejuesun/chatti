@@ -96,9 +96,9 @@ export default {
     mounted() {
         this.getImeUrl()
     },
-    // updated() {
-    //     this.getImeUrl()
-    // },
+    updated() {
+        this.getImeUrl()
+    },
     computed: {
         ...mapState(['memberInfo'])
     }

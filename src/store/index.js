@@ -62,11 +62,16 @@ export default new Vuex.Store({
       console.log(res)
       if(res.code === 0) {
         // let revStr = res.data.reverse()
-        res.data.list.forEach(function(pre){
+        res.data.list.forEach(function(pre) {
           // console.log(x + '|' + index + '|' + (a === arr));
+          res.msgType = "msgres"
           state.chatText.unshift(pre)
         });
-        getChatTextInfo.mid = res.data.left
+        if(res.data.left){
+          getChatTextInfo.mid = res.data.left-1
+        }else{
+          getChatTextInfo.mid = 0
+        }
         // const count = state.chatText.unshift(revStr)
         // state.chatText = res.data
         console.log('加了历史',state.chatText,getChatTextInfo)

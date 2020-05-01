@@ -95,13 +95,13 @@ export default {
             if (!isLt2M) {
                 this.$message.error('上传头像图片大小不能超过 2MB!');
             }
-            // let filid= file.uid
-            // let filidod = fileid 
-            // if(filid = filidod){
-                this.formData.append("avatar",file) //
-            // }else{
-
-            // }
+            const filid= file.uid
+            let filidod = file.uid 
+            if(filid = filidod){
+                this.formData.append("avatar", file) //
+            }else{
+                this.formData.set("avatar", file)
+            }
             
             // console.log(this.formData.get("avatar"))
             // console.log(filename)
