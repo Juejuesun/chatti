@@ -13,7 +13,7 @@
             <el-col :span="16">
                 <el-form label-position="top" >
                     <el-form-item label="Photo">
-                        <el-upload class="avatar-uploader" action="https://jsonplaceholder.typicode.com/posts/" :show-file-list="false" :on-success="handleAvatarSuccess" :before-upload="beforeAvatarUpload">
+                        <el-upload class="avatar-uploader" action="https://jsonplaceholder.typicode.com/posts/" :show-file-list="false" :on-success="handleAvatarSuccess" :before-upload="beforeAvatarUpload" >
                             <img v-if="imageUrl" :src="imageUrl" class="avatar">
                             <i v-else class="el-icon-plus avatar-uploader-icon"></i>
                         </el-upload>
@@ -69,18 +69,16 @@ export default {
 
             if ((isJPG != 'image/jpeg') && (isJPG != 'image/png')) {
                 this.$message.error('上传头像图片只能是 JPG 或 PNG 格式!');
+                return
             }
             if (!isLt2M) {
                 this.$message.error('上传头像图片大小不能超过 2MB!');
+                return
             }
-            const filid= file.uid
-            let filidod = file.uid 
-            if(filid == filidod){
-                this.formData.append("avatar", file) //
-            }else{
-                this.formData.set("avatar", file)
-            }
-            console.log(file,"filid:"+filid,"filidod:"+filidod)
+            this.formData.set("avatar", file)
+            console.log(file)
+            // console.log("form中",this.formData.get("avatar"))
+            // console.log(this.formData.has("avatar"))
             return isJPG && isLt2M ;
         },
         creatGroup() {

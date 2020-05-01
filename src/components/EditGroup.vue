@@ -85,17 +85,13 @@ export default {
 
             if ((isJPG != 'image/jpeg') && (isJPG != 'image/png')) {
                 this.$message.error('上传头像图片只能是 JPG 或 PNG 格式!');
+                return
             }
             if (!isLt2M) {
                 this.$message.error('上传头像图片大小不能超过 2MB!');
+                return
             }
-            const filid= file.uid
-            let filidod = file.uid 
-            if(filid == filidod){
-                this.formData.append("avatar", file) //
-            }else{
-                this.formData.set("avatar", file)
-            }
+            this.formData.set("avatar", file)
             return isJPG && isLt2M ;
         },
         back() {
