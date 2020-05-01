@@ -64,7 +64,9 @@ export default new Vuex.Store({
         // let revStr = res.data.reverse()
         res.data.list.forEach(function(pre) {
           // console.log(x + '|' + index + '|' + (a === arr));
-          res.msgType = "msgres"
+          if(!pre.msgType){
+            pre.msgType = "msgres"
+          }
           state.chatText.unshift(pre)
         });
         if(res.data.left){

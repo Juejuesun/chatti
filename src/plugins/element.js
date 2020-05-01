@@ -1,4 +1,5 @@
 import Vue from 'vue'
+
 import {
     Button,
     Message,
@@ -21,7 +22,8 @@ import {
     Submenu,
     MenuItem,
     Drawer,
-    Tag
+    Tag,
+    MessageBox
 } from 'element-ui'
 
 Vue.use(Button)
@@ -45,5 +47,7 @@ Vue.use(Submenu)
 Vue.use(MenuItem)
 Vue.use(Drawer)
 Vue.use(Tag)
+// Vue.use(MessageBox)
 
 Vue.prototype.$message = Message
+Vue.prototype.$confirm = MessageBox
