@@ -20,14 +20,28 @@ export default {
         ...mapState(['sessionId'])
     },
     methods: {
-        async deleteRoom() {
+        deleteRoom() {
             // const {data: res} = await this.$http.delete('http://localhost:3000/delh',this.sessionId) //测试接口
             let ssid = {
                 sid: this.sessionId
             }
-            const {data: res} = await this.$http.delete('v1/rooms',{params: ssid})//正式用
-            console.log(res)
-            alert('删除成功！')
+            this.$confirm('此操作将解散房间, 是否继续?', '提示', {
+                confirmButtonText: '确定',
+                cancelButtonText: '取消',
+                type: 'warning'
+            }).then(async () => {
+                const {data: res} = await this.$http.delete('v1/rooms',{params: ssid})//正式用
+                console.log(res)
+                this.$message({
+                    type: 'success',
+                    message: '解散成功!'
+                });
+            }).catch(() => {
+                this.$message({
+                type: 'info',
+                message: '已取消解散'
+                });          
+            });
         }
     }
 }
