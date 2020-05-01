@@ -91,7 +91,7 @@ export default {
             }
             const filid= file.uid
             let filidod = file.uid 
-            if(filid = filidod){
+            if(filid == filidod){
                 this.formData.append("avatar", file) //
             }else{
                 this.formData.set("avatar", file)

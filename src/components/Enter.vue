@@ -75,12 +75,12 @@ export default {
             }
             const filid= file.uid
             let filidod = file.uid 
-            if(filid = filidod){
+            if(filid == filidod){
                 this.formData.append("avatar", file) //
             }else{
                 this.formData.set("avatar", file)
             }
-            console.log(file)
+            console.log(file,"filid:"+filid,"filidod:"+filidod)
             return isJPG && isLt2M ;
         },
         creatGroup() {
