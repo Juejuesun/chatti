@@ -9,7 +9,7 @@
                 </div>
                 <div class="msg">
                     <h5>{{groupInfo.groupName}}</h5>
-                    <div class="types">{{groupMembers}}members · {{groupInfo.groupTopic}}</div>
+                    <div class="types" @click="refresh">{{groupMembers}}members · {{groupInfo.groupTopic}}</div>
                 </div>
             </div>
             <div>
@@ -67,6 +67,12 @@ export default {
         },
         getImeUrl() {
             this.imgUrl = this.groupInfo.groupAvatar
+        },
+        refresh() {
+            const roomid = {
+                room: this.groupInfo.groupId
+            }
+            this.$socket.emit("online_cnt", roomid)
         }
     },
     mounted() {

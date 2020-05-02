@@ -5,24 +5,26 @@
         "left": 8,
         "list": [
             {
+                "msg": "waserena",
                 "uname": "poi",
+                "date": "23:17:14",
+                "avatar": "https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png"
+            },
+            {
+                "uname": "大华",
                 "msg": "waserena",
                 "date": "21:52:11",
                 "msgType": "msgres",
-                "cid": "aa231"
+                "cid": "aa231",
+                "avatar": "https://fuss10.elemecdn.com/d/e6/c4d93a3805b3ce3f323f7974e6f78jpeg.jpeg"
             },
             {
                 "uname": "213",
                 "msg": "大范围",
                 "date": "12:52:11",
                 "msgType": "msgres",
-                "cid": "aa231"
-            },
-            {
-                "msg": "waserena",
-                "name": "poi",
-                "date": "23:17:14",
-                "avatar": "url"
+                "cid": "aa231",
+                "avatar": "https://fuss10.elemecdn.com/0/6f/e35ff375812e6b0020b6b4e8f9583jpeg.jpeg"
             }
         ]
     } 

@@ -28,7 +28,7 @@
                                 <el-avatar class="msgName" :src="imgUrl" :size="50">{{chat.uname}}</el-avatar>
                             </div>
                             <div v-else class="others">
-                                 <el-avatar class="msgName" :src="chat.url" :size="50">{{chat.uname}}</el-avatar>
+                                 <el-avatar class="msgName" :src="chat.avatar" :size="50">{{chat.uname}}</el-avatar>
                                 <el-card class="box-card" shadow="hover">
                                     <div>{{chat.msg}}</div>
                                     <div class="msgdate">{{chat.date}} &nbsp;{{chat.uname}}</div>
@@ -49,8 +49,8 @@
                         </el-popover>
                     </div>
                     <el-button class="thisBtn" type="primary" icon="el-icon-s-promotion" circle @click="send"></el-button>
-                    <el-badge :value="msgNum" :is-dot="msgNum==0" :max="99" class="item" type="primary">
-                        <el-tag type="info" @click="getChatText">聊天记录</el-tag>
+                    <el-badge :value="msgNum" :is-dot="msgNum==-1" :hidden="msgNum==0" :max="99" class="item" type="primary">
+                        <el-tag type="info" @click="getChatText" style="cursor: pointer;">聊天记录</el-tag>
                     </el-badge>
                 </div>
             </el-footer>
@@ -123,7 +123,7 @@ export default {
                 room: this.groupInfo.groupId,
                 date: moment().format("HH:mm:ss"),
                 cid: this.sessionId.slice(0,6),
-                url: this.memberInfo.memberAvatar
+                avatar: this.memberInfo.memberAvatar
             }
             // console.log(transdata)
             this.$socket.emit("chat",transdata);
@@ -154,10 +154,10 @@ export default {
         console.log(urls)
     },
     created() {
-        const roomid = {
-            room: this.groupInfo.groupId
-        }
-        this.$socket.emit("online_cnt", roomid)
+        // const roomid = {
+        //     room: this.groupInfo.groupId
+        // }
+        // this.$socket.emit("online_cnt", roomid)//暂时不用
         // window.addEventListener('beforeunload', e => this.beforeunloadFn(e))
         this.openmsg()
     },

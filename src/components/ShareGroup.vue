@@ -20,15 +20,15 @@
         <!-- 卡片区 -->
         <div class="bg">
             <el-card class="box-card">
-                <div class="cont2">
+                <div class="cont2" @click="shareGroup">
                     <div>Twtter</div>
                     <div><i class="fa fa-twitter"></i></div>
                 </div>
-                <div class="cont2">
+                <div class="cont2" @click="shareGroup">
                     <div>Facebook</div>
                     <div><i class="fa fa-facebook"></i></div>
                 </div>
-                <div class="cont2">
+                <div class="cont2" @click="shareGroup">
                     <div>Github</div>
                     <div><i class="fa fa-github"></i></div>
                 </div>
@@ -71,6 +71,16 @@ export default {
         },
         getImeUrl() {
             this.imgUrl = this.groupInfo.groupAvatar
+        },
+        shareGroup() {
+            this.CopyUrl()
+            this.$confirm('复制成功！快去分享吧', '提示', {
+                confirmButtonText: '确定',
+                type: 'success',
+                center: true,
+                showClose: false,
+                showCancelButton: false
+            })
         }
     },
     mounted() {
@@ -95,6 +105,10 @@ export default {
     justify-content: space-between;
     align-items: center;
     margin: 15px;
+    cursor: pointer;
+}
+.cont2:hover {
+    color: #409EFF;
 }
 .msg {
     margin-left: 15px;

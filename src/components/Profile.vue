@@ -62,8 +62,8 @@
                     </div>
                     <div class="cont2">
                         <div>
-                            <p>Time</p>
-                            <h4>10:00 am</h4>
+                            <p>Join Time</p>
+                            <h4>{{memberInfo.memberJotime}}</h4>
                         </div>
                         <div>
                             <i class="el-icon-time"></i>

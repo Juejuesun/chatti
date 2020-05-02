@@ -34,6 +34,9 @@
                     <el-form-item label="Name" prop="username">
                         <el-input placeholder="Type your name" v-model="loginForm.username"></el-input>
                     </el-form-item>
+                    <el-form-item label="Country">
+                        <el-input placeholder="Type your country" v-model="loginForm.memberCountry"></el-input>
+                    </el-form-item>
                     <el-form-item label="Phone">
                         <el-input placeholder="(123) 456-789" v-model="loginForm.uphone"></el-input>
                     </el-form-item>
@@ -69,6 +72,7 @@ export default {
                 uphone: '',
                 uemail: '',
                 udiscription: '',
+                memberCountry: ''
             },
             loginFormRules:{
                 //用户名是否合法
@@ -109,7 +113,9 @@ export default {
                         'uname': this.loginForm.username,
                         'uphone': this.loginForm.uphone,
                         'uemail': this.loginForm.uemail,
-                        'udiscription': this.loginForm.udiscription
+                        'udiscription': this.loginForm.udiscription,
+                        'memberCountry': this.loginForm.memberCountry
+                        // 'joinTime': moment().format("HH:mm")
                     }
                     // socket 事件
                     window.sessionStorage.setItem('USERNAME',this.loginForm.username)
@@ -144,11 +150,13 @@ export default {
                             query:{id: this.groupInfo.groupId}
                         })//做一个守卫
                         //守卫
+                        this.refreshMembers()
                         this.$socket.emit("join",sig);
                         this.$message({
                             message:"设置成功,快去聊天吧!",
                             type:'success'
                         })
+                        this.$store.dispatch('getinTime')
                     }else {
                         this.$message({
                             message:"修改成功",
@@ -183,6 +191,12 @@ export default {
             this.groupInfo.groupUrl = 'http://localhost:8080/#'+groupUrl//测试使用
             // this.groupInfo.groupUrl = 'http://localhost/#'+groupUrl//正式使用
 
+        },
+        refreshMembers() {
+            const roomid = {
+                room: this.groupInfo.groupId
+            }
+            this.$socket.emit("online_cnt", roomid)
         }
     }
 }

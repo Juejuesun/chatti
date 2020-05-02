@@ -15,11 +15,11 @@ export default new Vuex.Store({
       groupId: '',
       groupAvatar: 'https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg'
     },
-    groupMembers: 1,
+    groupMembers: 0,
     sessionId: '',
     defaultActive: 'enter',
     isShowState: true,
-    msgNum: 0,
+    msgNum: -1,
     newmsg: true,
     memberInfo: {
       memberName: '',
@@ -27,7 +27,8 @@ export default new Vuex.Store({
       memberCountry: 'Warsaw, Poland',
       memberPhone: '+39 02 87 21 43 19',
       memberEmail: 'anna@gmail.com',
-      memberAvatar: 'https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg'
+      memberAvatar: 'https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg',
+      memberJotime: '--:--'
     },
     chatText: [],
     searchChatText: []
@@ -49,8 +50,6 @@ export default new Vuex.Store({
           state.groupInfo.groupTopic = res.data.topic
           state.groupInfo.groupDiscription = res.data.desc
           state.groupInfo.groupAvatar = res.data.avatar
-        
-
         }
         console.log('getGroupInfo!') //调试用
         
@@ -66,29 +65,33 @@ export default new Vuex.Store({
       const {data: res} = await axios.get('chatText.json');//测试使用
       let getChatTextInfo = {
         room: state.groupInfo.groupId,
-        mid: -1
+        mid: state.msgNum
       }
-      const {data: resTest} = await axios.get('http://localhost:3000/delh',getChatTextInfo);//测试时为
-      // const {data: res} = await axios.get('v1/messages',{params: getChatTextInfo});//正式用
-      console.log(res)
-      if(res.code === 0) {
-        // let revStr = res.data.reverse()
-        state.msgNum = res.data.left
-        res.data.list.forEach(function(pre) {
-          // console.log(x + '|' + index + '|' + (a === arr));
-          if(!pre.msgType){
-            pre.msgType = "msgres"
+      if(state.msgNum===0) {
+        return
+      }else{
+        const {data: resTest} = await axios.get('http://localhost:3000/delh',getChatTextInfo);//测试时为
+        // const {data: res} = await axios.get('v1/messages',{params: getChatTextInfo});//正式用
+        console.log(res)
+        if(res.code === 0) {
+          // let revStr = res.data.reverse()
+          // state.msgNum = res.data.left
+          res.data.list.forEach(function(pre) {
+            // console.log(x + '|' + index + '|' + (a === arr));
+            if(!pre.msgType){
+              pre.msgType = "msgres"
+            }
+            state.chatText.unshift(pre)
+          });
+          if(res.data.left){
+            state.msgNum = res.data.left-1
+          }else{
+            state.msgNum = 0
           }
-          state.chatText.unshift(pre)
-        });
-        if(res.data.left){
-          getChatTextInfo.mid = res.data.left-1
-        }else{
-          getChatTextInfo.mid = 0
+          // const count = state.chatText.unshift(revStr)
+          // state.chatText = res.data
+          console.log('加了历史',state.chatText,getChatTextInfo)
         }
-        // const count = state.chatText.unshift(revStr)
-        // state.chatText = res.data
-        console.log('加了历史',state.chatText,getChatTextInfo)
       }
     },
     showSearch(state,{search}){
@@ -117,9 +120,16 @@ export default new Vuex.Store({
       }
       if(data.uemail) {
         state.memberInfo.memberEmail = data.uemail
-      }if(data.udiscription) {
+      }
+      if(data.udiscription) {
         state.memberInfo.memberDes = data.udiscription
       }
+      if(data.udiscription) {
+        state.memberInfo.memberCountry = data.memberCountry
+      }
+    },
+    getinTime(state) {
+      state.memberInfo.memberJotime = moment().format("HH:mm")
     },
     SOCKET_online_count(state, data) {
       state.groupMembers = data;
@@ -130,24 +140,25 @@ export default new Vuex.Store({
     SOCKET_chat(state,data) {
       console.log(data)
         let chatmsg = {
-          uname: data.name,
+          uname: data.uname,
           msg: data.msg,
           date: moment().format("HH:mm:ss"),
           msgType: 'msgres',
           cid: state.sessionId.slice(0,6),
-          url: state.memberInfo.memberAvatar
+          avatar: state.memberInfo.memberAvatar
         }
-        state.chatText.push(chatmsg)//调试时使用
+        state.chatText.push(chatmsg)
     },
     SOCKET_response(state,respond) {
       console.log(respond)
       let joinmsg = {
-          uname: respond,
+          uname: respond.msg,
           msg: '',
           date: moment().format("HH:mm:ss"),
           msgType: 'respond'
       }
-      state.chatText.push(joinmsg)//调试时使用
+      state.chatText.push(joinmsg)
+      state.groupMembers += respond.change
     },
     getUname(state) {
       state.memberInfo.memberName = window.sessionStorage.getItem('USERNAME')
@@ -196,6 +207,9 @@ export default new Vuex.Store({
     },
     watchNew({commit},bool) {
       commit('watchNew', {bool})
+    },
+    getinTime({commit}) {
+      commit('getinTime')
     }
   },
   modules: {
