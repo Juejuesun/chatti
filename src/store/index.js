@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import axios from 'axios'
+const moment = require("moment")
 
 Vue.use(Vuex)
 
@@ -19,6 +20,7 @@ export default new Vuex.Store({
     defaultActive: 'enter',
     isShowState: true,
     msgNum: 0,
+    newmsg: true,
     memberInfo: {
       memberName: '',
       memberDes: 'No Description',
@@ -60,7 +62,7 @@ export default new Vuex.Store({
         state.defaultActive = 'chatroom'
       }
     },
-    async getChatText(state) {
+    async getChatText(state) {//历史消息
       const {data: res} = await axios.get('chatText.json');//测试使用
       let getChatTextInfo = {
         room: state.groupInfo.groupId,
@@ -125,6 +127,28 @@ export default new Vuex.Store({
     SOCKET_sid(state,data) {
       state.sessionId = data
     },
+    SOCKET_chat(state,data) {
+      console.log(data)
+        let chatmsg = {
+          uname: data.name,
+          msg: data.msg,
+          date: moment().format("HH:mm:ss"),
+          msgType: 'msgres',
+          cid: state.sessionId.slice(0,6),
+          url: state.memberInfo.memberAvatar
+        }
+        state.chatText.push(chatmsg)//调试时使用
+    },
+    SOCKET_response(state,respond) {
+      console.log(respond)
+      let joinmsg = {
+          uname: respond,
+          msg: '',
+          date: moment().format("HH:mm:ss"),
+          msgType: 'respond'
+      }
+      state.chatText.push(joinmsg)//调试时使用
+    },
     getUname(state) {
       state.memberInfo.memberName = window.sessionStorage.getItem('USERNAME')
     },
@@ -138,6 +162,10 @@ export default new Vuex.Store({
       }else {
         console.log("获取失败！")
       }
+    },
+    watchNew(state,{bool}) {
+      state.newmsg = bool
+      console.log(state.newmsg, bool)
     }
   },
   actions: {
@@ -165,6 +193,9 @@ export default new Vuex.Store({
     },
     changeState({commit}) {
       commit('changeState')
+    },
+    watchNew({commit},bool) {
+      commit('watchNew', {bool})
     }
   },
   modules: {

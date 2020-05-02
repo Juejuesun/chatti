@@ -28,7 +28,7 @@
                                 <el-avatar class="msgName" :src="imgUrl" :size="50">{{chat.uname}}</el-avatar>
                             </div>
                             <div v-else class="others">
-                                 <el-avatar class="msgName" :size="50">{{chat.uname}}</el-avatar>
+                                 <el-avatar class="msgName" :src="chat.url" :size="50">{{chat.uname}}</el-avatar>
                                 <el-card class="box-card" shadow="hover">
                                     <div>{{chat.msg}}</div>
                                     <div class="msgdate">{{chat.date}} &nbsp;{{chat.uname}}</div>
@@ -44,7 +44,7 @@
                     <el-input placeholder="Send your message..." style="width: 80%;"  v-model="msg" @keyup.enter.native="send"></el-input>
                     <div class="emojiwin">
                         <el-popover placement="top" trigger="click" visible-arrow="true" >
-                            <VEmojiPicker @select="selectEmoji" />
+                            <VEmojiPicker @select="selectEmoji" style="height: 300px; width: 225px"/>
                             <i slot="reference" class="fa fa-smile-o "></i>
                         </el-popover>
                     </div>
@@ -92,7 +92,7 @@ export default {
         }
     },
     methods: {
-        // ...mapState(['getGroupInfo']),
+        ...mapState(['watchNew']),
         openmsg() {
             const root = window.sessionStorage.getItem('ROOMROOT')
             if(root && (window.sessionStorage.getItem('FIRSTCRT')=='true')) {
@@ -119,10 +119,11 @@ export default {
         send() {
             let transdata = {
                 msg: this.msg,
-                name: this.memberInfo.memberName,
+                uname: this.memberInfo.memberName,
                 room: this.groupInfo.groupId,
                 date: moment().format("HH:mm:ss"),
-                cid: this.sessionId.slice(0,6)
+                cid: this.sessionId.slice(0,6),
+                url: this.memberInfo.memberAvatar
             }
             // console.log(transdata)
             this.$socket.emit("chat",transdata);
@@ -166,6 +167,8 @@ export default {
     mounted() {
         // this.getChatText();//使用
         // window.addEventListener('scroll', this.handleScroll, true);
+        const bool = true
+        this.$store.dispatch('watchNew', bool)
     },
     destroyed() {
         // window.removeEventListener('scroll', this.handleScroll); //离开页面需要移除这个监听的事件
@@ -174,31 +177,6 @@ export default {
         connect() {      //与ws:127.0.0.1:8000连接后回调
             console.log('连接成功');
         },
-        online_count(Num){
-            console.log(Num)
-            // this.groupMembers = Num
-        },
-        chat(data) {
-            console.log(data)
-            let chatmsg = {
-                uname: data.name,
-                msg: data.msg,
-                date: moment().format("HH:mm:ss"),
-                msgType: 'msgres',
-                cid: this.sessionId.slice(0,6)
-            }
-            this.chatText.push(chatmsg)//调试时使用
-        },
-        response(respond) {
-            console.log(respond)
-            let joinmsg = {
-                uname: respond,
-                msg: '',
-                date: moment().format("HH:mm:ss"),
-                msgType: 'respond'
-            }
-            this.chatText.push(joinmsg)//调试时使用
-        }
     },
     updated() {
         this.roolDown()
