@@ -9,7 +9,7 @@ import {mapState, mapActions} from 'vuex'
 
 export default {
   computed: {
-      ...mapState(['defaultActive','isShowState','groupInfo','memberInfo'])
+      ...mapState(['defaultActive','groupInfo','memberInfo'])
   },
   methods: {
     beforeunloadFn(e) {

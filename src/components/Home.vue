@@ -14,7 +14,7 @@
                 </router-link>
             </div> -->
             <el-menu :default-active="defaultActive" class="el-menu-vertical-demo">
-                <el-avatar :size="50" :src="imgUrl" fit="fit">
+                <el-avatar :size="50" :src="imgUrl" fit="fit">haha
                 <!-- <el-image src="https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg" fit="cover"></el-image> -->
                 </el-avatar>
                 <el-menu-item index="enter" v-show="isShowState">
@@ -53,7 +53,7 @@ export default {
         }
     },
     computed: {
-        ...mapState(['defaultActive','isShowState','groupInfo','memberInfo'])
+        ...mapState(['defaultActive','groupInfo','memberInfo','isShowState'])
     },
     methods: {
         ...mapActions(['getGroupInfo']),

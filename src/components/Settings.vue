@@ -158,7 +158,7 @@ export default {
                     this.$store.dispatch('getUname')
                     this.$store.dispatch('savePreferences',memberInfo) //strot事件
                     // this.$refs.loginFormRef.resetFields();
-                    
+                    this.$store.dispatch('changeState')
                     this.loginForm.uemail=''
                     this.loginForm.udiscription=''
                     this.loginForm.uphone=''

@@ -23,15 +23,15 @@
                             <div v-if="chat.uname==memberInfo.memberName&&chat.cid===sessionId.slice(0,6)" class="self">
                                 <el-card class="box-card" shadow="hover" style="background-color: #409EFF; color: #FFFFFF">
                                     <div>{{chat.msg}}</div>
-                                    <div class="msgdate">{{chat.date}}</div>
+                                    <div class="msgdate">{{chat.date}} &nbsp;{{chat.uname}}</div>
                                 </el-card>
-                                <el-avatar class="msgName" :size="50">{{chat.uname}}</el-avatar>
+                                <el-avatar class="msgName" :src="imgUrl" :size="50">{{chat.uname}}</el-avatar>
                             </div>
                             <div v-else class="others">
                                  <el-avatar class="msgName" :size="50">{{chat.uname}}</el-avatar>
                                 <el-card class="box-card" shadow="hover">
                                     <div>{{chat.msg}}</div>
-                                    <div class="msgdate">{{chat.date}}</div>
+                                    <div class="msgdate">{{chat.date}} &nbsp;{{chat.uname}}</div>
                                 </el-card>
                             </div>
                         </div>
@@ -49,8 +49,9 @@
                         </el-popover>
                     </div>
                     <el-button class="thisBtn" type="primary" icon="el-icon-s-promotion" circle @click="send"></el-button>
-                    <!-- <el-button type="primary" @click="getChatText">获取聊天记录</el-button> -->
-                    <el-tag type="info" @click="getChatText">聊天记录</el-tag>
+                    <el-badge :value="msgNum" :is-dot="msgNum==0" :max="99" class="item" type="primary">
+                        <el-tag type="info" @click="getChatText">聊天记录</el-tag>
+                    </el-badge>
                 </div>
             </el-footer>
         </el-container>
@@ -75,7 +76,8 @@ export default {
         return {
             isShow: false,
             // chatTexts: this.chatText
-            msg: ''
+            msg: '',
+            imgUrl: ''
         }
     },
     watch: {
@@ -102,6 +104,9 @@ export default {
                     window.sessionStorage.setItem('FIRSTCRT', 'false')
             }
             
+        },
+        getImeUrl() {
+            this.imgUrl = this.memberInfo.memberAvatar
         },
         selectEmoji(emoji) {
             console.log(emoji)//调试
@@ -156,7 +161,7 @@ export default {
         this.openmsg()
     },
     computed: {
-        ...mapState(['chatText','memberInfo','groupInfo','sessionId'])
+        ...mapState(['chatText','memberInfo','groupInfo','sessionId','msgNum'])
     },
     mounted() {
         // this.getChatText();//使用
@@ -197,6 +202,7 @@ export default {
     },
     updated() {
         this.roolDown()
+        this.getImeUrl()
     }
 }
 </script>

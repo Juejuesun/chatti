@@ -24,10 +24,8 @@ import {
     Drawer,
     Tag,
     MessageBox,
-    Notification
-    // Alert,
-    // msgbox
-    // Option
+    Notification,
+    Badge
 } from 'element-ui'
 
 Vue.use(Button)
@@ -51,6 +49,7 @@ Vue.use(Submenu)
 Vue.use(MenuItem)
 Vue.use(Drawer)
 Vue.use(Tag)
+Vue.use(Badge)
 
 Vue.prototype.$message = Message
 Vue.prototype.$confirm = MessageBox

@@ -18,6 +18,7 @@ export default new Vuex.Store({
     sessionId: '',
     defaultActive: 'enter',
     isShowState: true,
+    msgNum: 0,
     memberInfo: {
       memberName: '',
       memberDes: 'No Description',
@@ -46,10 +47,18 @@ export default new Vuex.Store({
           state.groupInfo.groupTopic = res.data.topic
           state.groupInfo.groupDiscription = res.data.desc
           state.groupInfo.groupAvatar = res.data.avatar
+        
+
         }
         console.log('getGroupInfo!') //调试用
-        state.defaultActive = 'chatroom'
+        
+    },
+    changeState(state) {
+      const usName = window.sessionStorage.getItem('USERNAME')
+      if(usName) {
         state.isShowState = false
+        state.defaultActive = 'chatroom'
+      }
     },
     async getChatText(state) {
       const {data: res} = await axios.get('chatText.json');//测试使用
@@ -62,6 +71,7 @@ export default new Vuex.Store({
       console.log(res)
       if(res.code === 0) {
         // let revStr = res.data.reverse()
+        state.msgNum = res.data.left
         res.data.list.forEach(function(pre) {
           // console.log(x + '|' + index + '|' + (a === arr));
           if(!pre.msgType){
@@ -152,6 +162,9 @@ export default new Vuex.Store({
     },
     getAvatar({commit}) {
       commit('getAvatar')
+    },
+    changeState({commit}) {
+      commit('changeState')
     }
   },
   modules: {
