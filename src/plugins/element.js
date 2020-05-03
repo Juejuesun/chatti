@@ -25,7 +25,8 @@ import {
     Tag,
     MessageBox,
     Notification,
-    Badge
+    Badge,
+    Loading
 } from 'element-ui'
 
 Vue.use(Button)
@@ -57,3 +58,4 @@ Vue.prototype.$alert = MessageBox.alert
 Vue.prototype.$confirm = MessageBox.confirm
 Vue.prototype.$prompt = MessageBox.prompt
 Vue.prototype.$notify = Notification
+Vue.prototype.$loading = Loading.service

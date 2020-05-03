@@ -55,6 +55,16 @@ export default {
                 const bool = false
                 this.$store.dispatch('watchNew', bool)
             }
+        },
+        '$store.state.isloading'() {
+            if(this.$store.state.isloading === true) {
+                this.$loading({
+                    fullscreen: true,
+                    lock: true,
+                    text: '房间已被房主删除！打开此链接创建聊天室~ http://localhost/#/home/enter'
+                })
+            }
+            
         }
     }
 }

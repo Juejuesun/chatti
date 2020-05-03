@@ -14,7 +14,7 @@
                             <p>{{chat.msg}}</p>
                         </li>
                     </ul> -->
-                    <div class="cent">
+                    <div class="cent" >
                         <el-badge :value="msgNum" :is-dot="msgNum==-1" :hidden="msgNum==0" :max="99" class="item" type="primary">
                             <el-tag type="info" @click="getChatText" @mouseover.native="noGoDown(false)" @mouseout.native="noGoDown(true)" style="cursor: pointer;font-size: 10px;">聊天记录</el-tag>
                         </el-badge>
@@ -98,6 +98,16 @@ export default {
             } else {
                 this.isShow = true
             }
+        },
+        '$store.state.isloading'() {
+            if(this.$store.state.isloading === true) {
+                this.$loading({
+                    fullscreen: true,
+                    lock: true,
+                    text: '房间已被房主删除！打开此链接创建聊天室~ http://localhost/#/home/enter'
+                })
+            }
+            
         }
     },
     methods: {
@@ -124,6 +134,11 @@ export default {
         getChatText() {
             this.$store.dispatch('getChatText')
             console.log(this.chatText.length)
+            // this.$loading({
+            //     fullscreen: true,
+            //     lock: true,
+            //     text: '房间已被房主删除！打开此链接创建聊天室~ http://localhost/#/home/enter'
+            // })
         },
         send() {
             let transdata = {

@@ -14,8 +14,9 @@ export default {
   methods: {
     beforeunloadFn(e) {
       console.log('关闭')
-      alert("确定离开吗？")
-      //房主删除房间
+      // alert("确定离开吗？")
+      
+      //房主离开并删除房间
       const root = window.sessionStorage.getItem('ROOMROOT')
       let ssid = {
           sid: this.sessionId
@@ -28,6 +29,12 @@ export default {
               center: true
           }).then(() => {//测试
           // }).then(async () => {//正式
+          //下线
+          let data = {
+            name: this.memberInfo.memberName,
+            room: this.groupInfo.groupId
+          }
+          this.$socket.emit('leave',data)
               // const {data: res} = await this.$http.delete('v1/rooms',{params: ssid})//正式用
               // console.log(res)
               // if(res.code === 0) //正式使用
@@ -44,12 +51,7 @@ export default {
               });
           });
       }
-      //下线
-      let data = {
-        name: this.memberInfo.memberName,
-        room: this.groupInfo.groupId
-      }
-      this.$socket.emit('leave',data)
+      
       // this.$socket.emit('online_cnt',data)
 
     }

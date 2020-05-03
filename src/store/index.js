@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import axios from 'axios'
+import '../plugins/element.js'
 const moment = require("moment")
 
 Vue.use(Vuex)
@@ -21,6 +22,7 @@ export default new Vuex.Store({
     isShowState: true,
     msgNum: -1,
     newmsg: true,
+    isloading: false,
     memberInfo: {
       memberName: '',
       memberDes: 'No Description',
@@ -159,6 +161,11 @@ export default new Vuex.Store({
       }
       state.chatText.push(joinmsg)
       state.groupMembers += respond.change
+    },
+    SOCKET_disconnect(state) {
+      state.chatText = []
+      // alert('断开链接')
+      state.isloading = true
     },
     getUname(state) {
       state.memberInfo.memberName = window.sessionStorage.getItem('USERNAME')
