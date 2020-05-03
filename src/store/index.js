@@ -134,6 +134,7 @@ export default new Vuex.Store({
     },
     SOCKET_online_count(state, data) {
       state.groupMembers = data;
+      console.log("online_count返回数据："+data)
     },
     SOCKET_sid(state,data) {
       state.sessionId = data
@@ -146,7 +147,7 @@ export default new Vuex.Store({
           date: moment().format("HH:mm:ss"),
           msgType: 'msgres',
           cid: state.sessionId.slice(0,6),
-          avatar: state.memberInfo.memberAvatar
+          avatar: data.avatar
         }
         state.chatText.push(chatmsg)
     },
@@ -160,6 +161,7 @@ export default new Vuex.Store({
       }
       state.chatText.push(joinmsg)
       state.groupMembers += respond.change
+      console.log("response目前返回人数："+state.groupMembers)
     },
     SOCKET_disconnect(state) {
       state.chatText = []
@@ -174,7 +176,7 @@ export default new Vuex.Store({
         'sid': state.sessionId
       }
       const {data: res} = await axios.get('v1/users/avatar', {params: sidd})
-      if(res.code) {
+      if(!res.code) {
         state.memberInfo.memberAvatar = res.data
       }else {
         console.log("获取失败！")

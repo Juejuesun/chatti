@@ -81,12 +81,12 @@ export default {
     updated() {
         this.getImeUrl()
     },
-    sockets:{ //在此接收又服务器发送过来的数据 ps：注意此处的方法名要与服务器的发送的事件保持一致才能接收到
-        clientNum(Num){
-            console.log(typeof Num)
+    // sockets:{ //在此接收又服务器发送过来的数据 ps：注意此处的方法名要与服务器的发送的事件保持一致才能接收到
+    //     clientNum(Num){
+    //         console.log(typeof Num)
             
-        }
-    }
+    //     }
+    // }
 }
 </script>
 

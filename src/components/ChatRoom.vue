@@ -15,7 +15,7 @@
                         </li>
                     </ul> -->
                     <div class="cent" >
-                        <el-badge :value="msgNum" :is-dot="msgNum==-1" :hidden="msgNum==0" :max="99" class="item" type="primary">
+                        <el-badge :value="msgNum+1" :is-dot="msgNum==-1" :hidden="msgNum==0" :max="99" class="item" type="primary">
                             <el-tag type="info" @click="getChatText" @mouseover.native="noGoDown(false)" @mouseout.native="noGoDown(true)" style="cursor: pointer;font-size: 10px;">聊天记录</el-tag>
                         </el-badge>
                     </div>
@@ -108,7 +108,22 @@ export default {
                 })
             }
             
-        }
+        },
+        '$store.state.groupMembers'() {
+            
+            if(this.$store.state.groupMembers === 0) {
+                this.$message({
+                        type: 'error',
+                        message: '此房间不存在!'
+                    });
+                this.$loading({
+                    fullscreen: true,
+                    lock: true,
+                    text: '房间不存在！打开此链接创建聊天室~ http://localhost/#/home/enter'
+                })
+            }
+            
+        },
     },
     methods: {
         ...mapState(['watchNew']),

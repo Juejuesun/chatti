@@ -149,9 +149,10 @@ export default {
                             // name: 'chatroom',
                             query:{id: this.groupInfo.groupId}
                         })//做一个守卫
+                        this.$socket.emit("join",sig);
                         //守卫
                         this.refreshMembers()
-                        this.$socket.emit("join",sig);
+                        this.$store.dispatch('getChatText')
                         this.$message({
                             message:"设置成功,快去聊天吧!",
                             type:'success'

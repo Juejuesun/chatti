@@ -7,7 +7,7 @@
                     <!-- <i class="el-icon-arrow-left" @click="back"></i> -->
                     <div class="cont1">
                         <div>
-                           <el-avatar :size="80" src="https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg" fit="fit">
+                           <el-avatar :size="80" :src="groupInfo.groupAvatar" fit="fit">
                                 <!-- <el-image src="https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg" fit="cover"></el-image> -->
                             </el-avatar>
                         </div>
