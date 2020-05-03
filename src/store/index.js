@@ -24,9 +24,9 @@ export default new Vuex.Store({
     memberInfo: {
       memberName: '',
       memberDes: 'No Description',
-      memberCountry: 'Warsaw, Poland',
-      memberPhone: '+39 02 87 21 43 19',
-      memberEmail: 'anna@gmail.com',
+      memberCountry: 'No info',
+      memberPhone: 'No info',
+      memberEmail: 'No info',
       memberAvatar: 'https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg',
       memberJotime: '--:--'
     },
@@ -177,6 +177,9 @@ export default new Vuex.Store({
     watchNew(state,{bool}) {
       state.newmsg = bool
       console.log(state.newmsg, bool)
+    },
+    clearChatText(state) {
+      state.chatText = []
     }
   },
   actions: {
@@ -210,6 +213,9 @@ export default new Vuex.Store({
     },
     getinTime({commit}) {
       commit('getinTime')
+    },
+    clearChatText({commit}) {
+      commit('clearChatText')
     }
   },
   modules: {

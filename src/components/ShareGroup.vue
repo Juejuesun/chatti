@@ -14,8 +14,9 @@
                 <div class="types">{{groupInfo.groupUrl}}<i @click="CopyUrl" v-show="showLink" class="el-icon-link"></i></div>
             </div>
         </div>
-        <div>
-            <h2>{{introduction}}</h2>
+        <div class="itc">
+            <h3>{{introduction}}</h3>
+            <p>{{groupInfo.groupDiscription}}</p>
         </div>
         <!-- 卡片区 -->
         <div class="bg">
@@ -130,5 +131,8 @@ i {
     padding-bottom: 20px;
     margin-top: 0;
     height: 350px;
+}
+.itc {
+    padding: 10px;
 }
 </style>

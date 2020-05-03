@@ -42,10 +42,12 @@ export default {
                 // }).then(async () => {//正式
                     // const {data: res} = await this.$http.delete('v1/rooms',{params: ssid})//正式用
                     // console.log(res)
+                    // if(res.code === 0) //正式使用
+                    this.$store.dispatch('clearChatText')
                     console.log('ccc')
                     this.$message({
                         type: 'success',
-                        message: '删除成功!'
+                        message: '房间已解散!'
                     });
                 }).catch(() => {
                     this.$message({

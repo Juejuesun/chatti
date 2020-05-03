@@ -14,6 +14,11 @@
                             <p>{{chat.msg}}</p>
                         </li>
                     </ul> -->
+                    <div class="cent">
+                        <el-badge :value="msgNum" :is-dot="msgNum==-1" :hidden="msgNum==0" :max="99" class="item" type="primary">
+                            <el-tag type="info" @click="getChatText" @mouseover.native="noGoDown(false)" @mouseout.native="noGoDown(true)" style="cursor: pointer;font-size: 10px;">聊天记录</el-tag>
+                        </el-badge>
+                    </div>
                     <div v-for="(chat, index) in chatText" :key="index">
                         <div v-if="chat.msgType == 'respond'" class="respondMsg">
                             <div class="sysTime">{{chat.date}}</div>
@@ -49,9 +54,12 @@
                         </el-popover>
                     </div>
                     <el-button class="thisBtn" type="primary" icon="el-icon-s-promotion" circle @click="send"></el-button>
-                    <el-badge :value="msgNum" :is-dot="msgNum==-1" :hidden="msgNum==0" :max="99" class="item" type="primary">
+                    <!-- <div>
+                        <el-badge :is-dot="msgNum!=0" @click="getChatText" :hidden="msgNum==0" :max="99" class="item" type="primary" style="cursor:pointer; font-size: 10px">聊天记录</el-badge>
+                    </div> -->
+                    <!-- <el-badge :value="msgNum" :is-dot="msgNum==-1" :hidden="msgNum==0" :max="99" class="item" type="primary">
                         <el-tag type="info" @click="getChatText" style="cursor: pointer;">聊天记录</el-tag>
-                    </el-badge>
+                    </el-badge> -->
                 </div>
             </el-footer>
         </el-container>
@@ -77,7 +85,8 @@ export default {
             isShow: false,
             // chatTexts: this.chatText
             msg: '',
-            imgUrl: ''
+            imgUrl: '',
+            isDown: true
         }
     },
     watch: {
@@ -129,6 +138,12 @@ export default {
             this.$socket.emit("chat",transdata);
             this.msg = ''
         },
+        //阻拦与恢复下降
+        noGoDown(isEnter) {
+            this.isDown = isEnter
+            // console.log(this.isDown)
+        },
+        //下降
         roolDown() {
             this.$nextTick(function(){
             var div = document.getElementById('dialogue_box');
@@ -179,7 +194,9 @@ export default {
         },
     },
     updated() {
-        this.roolDown()
+        if(this.isDown) {
+            this.roolDown()
+        }
         this.getImeUrl()
     }
 }
@@ -225,7 +242,7 @@ export default {
     width: 380px;
     background-color: #EBEEF5;
     margin: 10px;
-    
+    border-radius: 10px;
 }
 .msgdate{
     font-size: 10px;
@@ -249,5 +266,9 @@ export default {
     margin-right: 0;
     font-size: 23px;
     color: #909399;
+}
+.cent {
+    display: flex;
+    justify-content: center;
 }
 </style>
