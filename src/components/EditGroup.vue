@@ -101,7 +101,7 @@ export default {
         async saveEditGro() {
             this.editInfo.sid = this.sessionId
             // console.log(this.editInfo)
-            const {data: res} = await this.$http.put('http://localhost:3000/comments', this.editInfo)//t测试接口
+            // const {data: res} = await this.$http.put('http://localhost:3000/comments', this.editInfo)//t测试接口
             this.formData.append('name', this.editInfo.gname)
             this.formData.append('sid', this.editInfo.sid)
             this.formData.append('topic', this.editInfo.gtopic)
@@ -114,7 +114,7 @@ export default {
             if(!this.formData.has("avatar")){
                 this.formData.delete("avatar")
             }
-            // const {data: res} = await this.$http.put('v1/rooms', this.formData, config) //房间设置 正式时用
+            const {data: res} = await this.$http.put('v1/rooms', this.formData, config) //房间设置 正式时用
             // console.log(res)
             //判断语句
             this.$store.dispatch('getGroupInfo')

@@ -27,19 +27,20 @@ export default {
               cancelButtonText: '取消',
               type: 'warning',
               center: true
-          }).then(() => {//测试
-          // }).then(async () => {//正式
+          // }).then(() => {//测试
+          }).then(async () => {//正式
           //下线
           let data = {
             name: this.memberInfo.memberName,
             room: this.groupInfo.groupId
           }
           this.$socket.emit('leave',data)
-              // const {data: res} = await this.$http.delete('v1/rooms',{params: ssid})//正式用
+              const {data: res} = await this.$http.delete('v1/rooms',{params: ssid})//正式用
               // console.log(res)
-              // if(res.code === 0) //正式使用
-              this.$store.dispatch('clearChatText')
-              console.log('房主离开啦！')
+              if(res.code === 0) {//正式使用
+                this.$store.dispatch('clearChatText')
+                console.log('房主离开啦！')
+              }
               this.$message({
                   type: 'success',
                   message: '房间已解散!'
