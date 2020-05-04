@@ -1,28 +1,23 @@
 <template>
-    
     <div >
-        <vuescroll :ops="ops" ref="vs"  >
         <div>
+            <i class="el-icon-arrow-left" @click="back"></i>
+        </div>
+        <div class="cont">
             <div>
-                <i class="el-icon-arrow-left" @click="back"></i>
+                <el-avatar size="large" :src="imgUrl" fit="fit">
+                    <!-- <el-image src="https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg" fit="cover"></el-image> -->
+                </el-avatar>
             </div>
-            <div class="cont">
-                <div>
-                    <el-avatar size="large" :src="imgUrl" fit="fit">
-                        <!-- <el-image src="https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg" fit="cover"></el-image> -->
-                    </el-avatar>
-                </div>
-                <div class="msg" @mouseenter="showLink=true" @mouseleave="showLink=false">
-                    <h5>{{groupInfo.groupName}}</h5>
-                    <div class="types">{{groupInfo.groupUrl}}<i @click="CopyUrl" v-show="showLink" class="el-icon-link"></i></div>
-                </div>
-            </div>
-            <div class="itc">
-                <h3>{{introduction}}</h3>
-                <p>{{groupInfo.groupDiscription}}</p>
+            <div class="msg" @mouseenter="showLink=true" @mouseleave="showLink=false">
+                <h5>{{groupInfo.groupName}}</h5>
+                <div class="types">{{groupInfo.groupUrl}}<i @click="CopyUrl" v-show="showLink" class="el-icon-link"></i></div>
             </div>
         </div>
-        </vuescroll>
+        <div class="itc">
+            <h3>{{introduction}}</h3>
+            <p>{{groupInfo.groupDiscription}}</p>
+        </div>
         <!-- 卡片区 -->
         <div class="bg">
             <el-card class="box-card">
@@ -40,38 +35,17 @@
                 </div>
             </el-card>
         </div>
-        
     </div>
-    
 </template>
 
 <script>
 import {mapState} from 'vuex'
-import vuescroll from 'vuescroll';
-
 export default {
-    components: {
-        vuescroll
-    },
     data() {
         return {
             introduction: 'introduction',
             showLink: false,
-            imgUrl: '',
-            ops: {
-                vuescroll: {},
-                scrollPanel: {},
-                rail: {
-                    keepShow: true
-                },
-                bar: {
-                    hoverStyle: true,
-                    onlyShowBarOnScroll: true, //是否只有滚动的时候才显示滚动条
-                    background: "#909399",//滚动条颜色
-                    opacity: 0.5,//滚动条透明度
-                    "overflow-x": "hidden"
-                }
-            }
+            imgUrl: ''
         }
     },
     computed: {
@@ -160,12 +134,5 @@ i {
 }
 .itc {
     padding: 10px;
-}
-
-.__bar-is-vertical {
-  right: -1px !important;
-}
-.__bar-is-horizontal {
-  display: none !important;
 }
 </style>

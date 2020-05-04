@@ -6,15 +6,13 @@
             </el-header>
              
             <el-main class="maincontent" id="dialogue_box">
-                <vuescroll :ops="ops" ref="vs" style="width:100%;height:100%" >
-                    <!-- <div id="dialogue_box"> -->
-                <div style="padding: 15px">
+                <div>
                     <div class="cent" >
                         <el-badge :value="msgNum+1" :is-dot="msgNum==-1" :hidden="msgNum==0" :max="99" class="item" type="primary">
                             <el-tag type="info" @click="getChatText" @mouseover.native="noGoDown(false)" @mouseout.native="noGoDown(true)" style="cursor: pointer;font-size: 10px;">聊天记录</el-tag>
                         </el-badge>
                     </div>
-                    <div v-for="(chat, index) in chatText" :key="index" class="animated fadeInUp">
+                    <div v-for="(chat, index) in chatText" :key="index">
                         <div v-if="chat.msgType == 'respond'" class="respondMsg">
                             <div class="sysTime">{{chat.date}}</div>
                             <div class="respond">{{chat.uname}}</div>
@@ -37,8 +35,6 @@
                         </div>
                     </div>
                 </div>
-                <!-- </div> -->
-                </vuescroll>
             </el-main>
             <el-footer>
                 <!-- <chatFooter/> -->
@@ -70,14 +66,12 @@
 import {mapState, mapActions} from 'vuex'
 import ChatHeader from './ChatHeader'
 import VEmojiPicker from 'v-emoji-picker';
-import vuescroll from 'vuescroll';
 
 const moment = require("moment")
 export default {
     components: {
         ChatHeader,
-        VEmojiPicker,
-        vuescroll
+        VEmojiPicker
     },
     data() {
         return {
@@ -85,21 +79,7 @@ export default {
             // chatTexts: this.chatText
             msg: '',
             imgUrl: '',
-            isDown: true,
-            ops: {
-                vuescroll: {},
-                scrollPanel: {},
-                rail: {
-                    keepShow: true
-                },
-                bar: {
-                    hoverStyle: true,
-                    onlyShowBarOnScroll: true, //是否只有滚动的时候才显示滚动条
-                    background: "#909399",//滚动条颜色
-                    opacity: 0.5,//滚动条透明度
-                    "overflow-x": "hidden"
-                }
-            }
+            isDown: true
         }
     },
     watch: {
@@ -169,7 +149,6 @@ export default {
             // })
         },
         send() {
-            
             let transdata = {
                 msg: this.msg,
                 uname: this.memberInfo.memberName,
@@ -179,7 +158,6 @@ export default {
                 avatar: this.memberInfo.memberAvatar
             }
             // console.log(transdata)
-            
             this.$socket.emit("chat",transdata);
             this.msg = ''
         },
@@ -191,12 +169,9 @@ export default {
         //下降
         roolDown() {
             this.$nextTick(function(){
-            // var div = document.getElementById('dialogue_box');
-            // div.scrollTop = div.scrollHeight;
-                this.$refs['vs'].scrollBy({
-                    dy: '100%'
-                },2000)
-            },1000)
+            var div = document.getElementById('dialogue_box');
+            div.scrollTop = div.scrollHeight;
+            })
         },
         // handleScroll() {
         //     let scrollTop = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop
@@ -318,13 +293,5 @@ export default {
 .cent {
     display: flex;
     justify-content: center;
-}
-
-
-.__bar-is-vertical {
-  right: -1px !important;
-}
-.__bar-is-horizontal {
-  display: none !important;
 }
 </style>

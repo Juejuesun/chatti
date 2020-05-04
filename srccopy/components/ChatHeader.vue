@@ -13,13 +13,7 @@
                 </div>
             </div>
             <div>
-                <el-popover placement="bottom-end" width="700" trigger="manual" v-model="search">
-                   <div>
-                        <el-input placeholder="Search for message or users..." suffix-icon="el-icon-search" v-model="sec" @keyup.enter.native="searchTextNow"></el-input>
-                        
-                    </div>
-                    <i slot="reference" class="el-icon-search" @click="search = !search" style="margin-left: 200px"></i>
-                </el-popover>
+                <i class="el-icon-search" @click="search=!search"></i>
                 <router-link to="/home/chatroom/share">
                     <i class="fa fa-share-alt"></i>
                 </router-link>
@@ -29,19 +23,19 @@
                     <i slot="reference" class="el-icon-more"></i>
                 </el-popover>
             </div>
-            
         </div>
-        <div>
-                <el-drawer title="查找记录" :visible.sync="drawer" direction="btt" :with-header="false" :size="'60%'">
-                    <h5>查找记录</h5>
-                    <ul style="background-color: pink">
-                        <li v-for="(chat, index) in searchChatText" :key="index">
-                            <h5>{{chat.uname}}</h5>
-                            <p>{{chat.msg}}</p>
-                        </li>
-                    </ul>
-                </el-drawer>
-            </div>
+        <div v-show="search">
+            <el-input placeholder="Search for message or users..." suffix-icon="el-icon-search" v-model="sec" @keyup.enter.native="searchTextNow"></el-input>
+            <el-drawer title="查找记录" :visible.sync="drawer" direction="btt" :with-header="false" :size="'60%'">
+                <h5>查找记录</h5>
+                <ul style="background-color: pink">
+                    <li v-for="(chat, index) in searchChatText" :key="index">
+                        <h5>{{chat.uname}}</h5>
+                        <p>{{chat.msg}}</p>
+                    </li>
+                </ul>
+            </el-drawer>
+        </div>
     </div>
 </template>
 
