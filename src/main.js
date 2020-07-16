@@ -6,6 +6,8 @@ import store from './store'
 import VueSocketIo from 'vue-socket.io'
 import SocketIO from "socket.io-client"
 import axios from 'axios'
+
+import 'font-awesome/css/font-awesome.css'
 //配置请求根路径
 // axios.defaults.baseURL = 'http://localhost:8080/mock'//测试用
 axios.defaults.baseURL = 'http://127.0.0.1/'//正式用
